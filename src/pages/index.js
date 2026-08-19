@@ -9,8 +9,8 @@ const content = {
   role: "Product Software Engineer",
   bio: [
     "I'm Michelle, a product software engineer building Moradiah, a proptech that helps Brazilian families go from renting to owning: property search, legal checks, and financing in one place. It's a deeply human product too: lawyers and real estate agents find their next clients through Moradiah, and families find professionals they can trust.",
-    "Before that, I spent six years automating work that used to take entire teams: OCR pipelines that pulled millions of fiscal documents in days instead of weeks, claims-approval bots for US health benefits, and a native macOS analytics app shipped through the full Apple pipeline.",
-    "Process discovery, architecture, code, deployment... I'm putting all of that experience into building environments where AI has no choice but to ship good, reliable code, whether that means AI in the loop or AI first.",
+    "Before that, I spent six years split between automation — OCR pipelines turning millions of fiscal documents into structured data in days instead of weeks — and building software, like the workplace-analytics platform I ported to native macOS app.",
+    "Process discovery, architecture, code, deployment... I'm putting all of that experience into building simple products that people actually use and environments where AI has no choice but to ship good, reliable code, whether that means AI in the loop or AI first.",
   ],
   email: "ola@micazev.com",
   availability: "Available for September",
