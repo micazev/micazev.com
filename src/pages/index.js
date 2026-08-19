@@ -6,7 +6,7 @@ import * as React from "react";
 
 const content = {
   name: "Michelle Azevedo",
-  role: "Product Designer",
+  role: "Product Engineer",
   bio: [
     "I'm Michelle, a product designer based in Ho Chi Minh City, Vietnam. I design digital interfaces that solve challenges and amplify user experiences, turning strategic goals into reality.",
     "I experiment with tools like v0 to prototype swiftly, focusing on clean, impactful solutions that balance creativity and functionality.",
