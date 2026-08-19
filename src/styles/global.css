@@ -237,6 +237,24 @@ body {
   text-align: center;
 }
 
+/* ---- footer -------------------------------------------------------- */
+
+.footer {
+  margin-top: var(--space-xl);
+}
+
+.quote p {
+  color: var(--ink-muted);
+  font-style: italic;
+}
+
+.quote p.quote-attribution {
+  margin-top: var(--space-xs);
+  color: var(--ink-faint);
+  font-size: 13px;
+  font-style: normal;
+}
+
 /* ---- focus --------------------------------------------------------- */
 
 :focus-visible {

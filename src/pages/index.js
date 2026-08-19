@@ -59,6 +59,11 @@ const content = {
   ],
   timeZone: "Asia/Ho_Chi_Minh",
   timeZoneAbbr: "ICT",
+  quote: {
+    text: "We can only see a short distance ahead, but we can see plenty there that needs to be done.",
+    author: "Alan Turing",
+    source: "Computing machinery and intelligence",
+  },
 };
 
 /* ------------------------------------------------------------------ */
@@ -181,8 +186,13 @@ const IndexPage = () => (
     </section>
 
 
-    <footer className="reveal" style={{ animationDelay: "300ms" }}>
-      <p>quote</p>
+    <footer className="footer reveal" style={{ animationDelay: "300ms" }}>
+      <blockquote className="quote">
+        <p>“{content.quote.text}”</p>
+        <p className="quote-attribution">
+          — {content.quote.author}, <cite>{content.quote.source}</cite>
+        </p>
+      </blockquote>
     </footer>
   </main>
 );
