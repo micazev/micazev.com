@@ -10,7 +10,7 @@ const content = {
   bio: [
     "Hey! I'm Michelle, a product software engineer who loves turning people's ideas into real life products.",
     "Almost a decade in, from enterprise to startups to solo builds, I've done the whole arc: process discovery, architecture, code, deployment. These days I'm putting all of it into simple products people actually use.",
-    "Lately I'm also having fun with a different problem: designing environments where AI has no choice but to ship good, reliable code — AI in the loop or AI first."
+    "Lately I'm also having fun with a different problem: designing good environments where AI can ship better, reliable code — AI in the loop or AI first."
   ],
   bioExtended: [
     "Still here? Nice. So, right now I'm building Moradiah, a proptech helping Brazilian families go from renting to owning: property search, legal checks, and financing in one place. It's a deeply human product: lawyers and real estate agents find their next clients through Moradiah, and families find professionals they can trust.",
