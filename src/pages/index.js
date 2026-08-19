@@ -8,10 +8,9 @@ const content = {
   name: "Michelle Azevedo",
   role: "Product Software Engineer",
   bio: [
-    "I'm Michelle, a product software engineer currently building Moradiah, a proptech that helps Brazilian families go from renting to owning: property search, legal checks, and financing; all in one place.",
-    "Process discovery, architecture, code, deployment.. I'm current using all this experiencce I have and I'm working on building environments where AI has no other choice than building good and realiable code, putting AI in the loop, or AI first .",
-    "Before that I spent six years automating work that used to take entire team, some of those: OCR pipelines that retrieved millions of fiscal documents in days instead of weeks, claims-approval bots for US health benefits, and a native macOS analytics app shipped through the full Apple pipeline."
-
+    "I'm Michelle, a product software engineer building Moradiah, a proptech that helps Brazilian families go from renting to owning: property search, legal checks, and financing in one place. It's a deeply human product too: lawyers and real estate agents find their next clients through Moradiah, and families find professionals they can trust.",
+    "Before that, I spent six years automating work that used to take entire teams: OCR pipelines that pulled millions of fiscal documents in days instead of weeks, claims-approval bots for US health benefits, and a native macOS analytics app shipped through the full Apple pipeline.",
+    "Process discovery, architecture, code, deployment... I'm putting all of that experience into building environments where AI has no choice but to ship good, reliable code, whether that means AI in the loop or AI first.",
   ],
   email: "ola@micazev.com",
   availability: "Available for September",
@@ -54,9 +53,9 @@ const content = {
     },
   ],
   links: [
-    { label: "Email", href: "mailto:ola@micazev.com" },
     { label: "LinkedIn", href: "https://www.linkedin.com/in/micazev" },
-    { label: "GitHub", href: "https://github.com/micazev" },
+    { label: "Substack", href: "https://www.substack.com/@micazev" },
+    { label: "Threads", href: "https://www.threads.com/@micazev" },
   ],
   timeZone: "Asia/Ho_Chi_Minh",
   timeZoneAbbr: "ICT",
@@ -162,6 +161,10 @@ const IndexPage = () => (
       </nav>
     </section>
 
+
+    <LocalTime timeZone={content.timeZone} abbr={content.timeZoneAbbr} />
+
+
     <section className="section reveal" style={{ animationDelay: "180ms" }}>
       <h2 className="section-label">Experience</h2>
       <div className="entries">
@@ -179,7 +182,7 @@ const IndexPage = () => (
 
 
     <footer className="reveal" style={{ animationDelay: "300ms" }}>
-      <LocalTime timeZone={content.timeZone} abbr={content.timeZoneAbbr} />
+      <p>quote</p>
     </footer>
   </main>
 );
