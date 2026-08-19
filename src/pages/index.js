@@ -6,10 +6,11 @@ import * as React from "react";
 
 const content = {
   name: "Michelle Azevedo",
-  role: "Product Engineer",
+  role: "Product Software Engineer",
   bio: [
-    "I'm Michelle, a product engineer based in São Paulo, Brazil. I'm currently building Moradiah, a proptech that helps Brazilian families go from renting to owning — property search, legal checks, and financing in one place.",
-    "Before that I spent six years automating work that used to take entire teams: OCR pipelines that retrieved millions of fiscal documents in days instead of weeks, claims-approval bots for US health benefits, and a native macOS analytics app shipped through the full Apple pipeline. I own the whole path — process discovery, architecture, code, deployment — and these days that increasingly means putting AI in the loop.",
+    "I'm Michelle, a product software engineer building Moradiah, a proptech that helps Brazilian families go from renting to owning: property search, legal checks, and financing in one place. It's a deeply human product too: lawyers and real estate agents find their next clients through Moradiah, and families find professionals they can trust.",
+    "Before that, I spent six years split between automation — OCR pipelines turning millions of fiscal documents into structured data in days instead of weeks — and building software, like the workplace-analytics platform I ported to native macOS app.",
+    "Process discovery, architecture, code, deployment... I'm putting all of that experience into building simple products that people actually use and environments where AI has no choice but to ship good, reliable code, whether that means AI in the loop or AI first.",
   ],
   email: "ola@micazev.com",
   availability: "Available for September",
@@ -18,13 +19,13 @@ const content = {
       company: "MP Consultoria Contábil",
       years: "2022 - 2024",
       description:
-        "Built a containerized Python framework automating tax declarations across Brazilian municipalities, and led the 3-person effort that retrieved millions of Nescafé fiscal notes in days — replacing weeks of work for a 20-person team.",
+        "Built a containerized Python framework automating tax declarations across Brazilian municipalities, and led the 3-person effort that retrieved millions of Nescafé fiscal notes in days, replacing weeks of work for a 20-person team.",
     },
     {
       company: "Evope",
       years: "2022 - 2023",
       description:
-        "Ported a Windows C++ workplace-analytics platform to native macOS in Swift and Objective-C — encrypted local-first storage, real-time sync, and the full Apple signing and notarization pipeline.",
+        "Ported a Windows C++ workplace-analytics platform to native macOS in Swift and Objective-C, encrypted local-first storage, real-time sync, and the full Apple signing and notarization pipeline.",
     },
     {
       company: "WEX",
@@ -42,7 +43,7 @@ const content = {
       company: "Xcelis",
       years: "2020 - 2022",
       description:
-        "Mapped and automated logistics and retail operations for ArcelorMittal, C&A, and VTEX — from process discovery to bots and automated reporting.",
+        "Mapped and automated logistics and retail operations for ArcelorMittal, C&A, and VTEX. From process discovery to bots and automated reporting.",
     },
     {
       company: "Deloitte",
@@ -52,12 +53,12 @@ const content = {
     },
   ],
   links: [
-    { label: "Email", href: "mailto:ola@micazev.com" },
     { label: "LinkedIn", href: "https://www.linkedin.com/in/micazev" },
-    { label: "GitHub", href: "https://github.com/micazev" },
+    { label: "Substack", href: "https://www.substack.com/@micazev" },
+    { label: "Threads", href: "https://www.threads.com/@micazev" },
   ],
-  timeZone: "America/Sao_Paulo",
-  timeZoneAbbr: "BRT",
+  timeZone: "Asia/Ho_Chi_Minh",
+  timeZoneAbbr: "ICT",
 };
 
 /* ------------------------------------------------------------------ */
@@ -113,7 +114,7 @@ const LocalTime = ({ timeZone, abbr }) => {
   }, [timeZone]);
 
   return (
-    <p className="clock" aria-label={`Current time in São Paulo`}>
+    <p className="clock" aria-label={`Current time in Ho Chi Minh City`}>
       {now ? `${now} ${abbr}` : " "}
     </p>
   );
@@ -143,22 +144,7 @@ const IndexPage = () => (
       </span>
     </div>
 
-    <section className="section reveal" style={{ animationDelay: "180ms" }}>
-      <h2 className="section-label">Experience</h2>
-      <div className="entries">
-        {content.experience.map((job) => (
-          <article className="entry" key={job.company}>
-            <div className="entry-row">
-              <h3 className="entry-company">{job.company}</h3>
-              <span className="entry-years">{job.years}</span>
-            </div>
-            <p className="entry-desc">{job.description}</p>
-          </article>
-        ))}
-      </div>
-    </section>
-
-    <section className="section reveal" style={{ animationDelay: "240ms" }}>
+        <section className="section reveal" style={{ animationDelay: "240ms" }}>
       <h2 className="section-label">Let's get in touch</h2>
       <nav className="links" aria-label="External links">
         {content.links.map((link) => (
@@ -175,8 +161,28 @@ const IndexPage = () => (
       </nav>
     </section>
 
+
+    <LocalTime timeZone={content.timeZone} abbr={content.timeZoneAbbr} />
+
+
+    <section className="section reveal" style={{ animationDelay: "180ms" }}>
+      <h2 className="section-label">Experience</h2>
+      <div className="entries">
+        {content.experience.map((job) => (
+          <article className="entry" key={job.company}>
+            <div className="entry-row">
+              <h3 className="entry-company">{job.company}</h3>
+              <span className="entry-years">{job.years}</span>
+            </div>
+            <p className="entry-desc">{job.description}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+
     <footer className="reveal" style={{ animationDelay: "300ms" }}>
-      <LocalTime timeZone={content.timeZone} abbr={content.timeZoneAbbr} />
+      <p>quote</p>
     </footer>
   </main>
 );
@@ -188,7 +194,7 @@ export const Head = () => (
     <title>Michelle Azevedo</title>
     <meta
       name="description"
-      content="Michelle Azevedo — product engineer based in São Paulo, Brazil. Building Moradiah, a proptech for first-time homeowners."
+      content="Michelle Azevedo — product engineer based in Ho Chi Minh City, Vietnam. Building Moradiah, a proptech for first-time homeowners."
     />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
   </>

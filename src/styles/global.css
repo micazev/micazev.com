@@ -234,6 +234,7 @@ body {
   color: var(--ink-faint);
   font-variant-numeric: tabular-nums;
   min-height: 22px; /* reserve the line before hydration */
+  text-align: center;
 }
 
 /* ---- focus --------------------------------------------------------- */
