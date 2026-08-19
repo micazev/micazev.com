@@ -50,7 +50,7 @@ body {
 /* ---- page column --------------------------------------------------- */
 
 .page {
-  max-width: 388px; /* 340px content + side padding */
+  max-width: 448px; /* 400px content + side padding */
   margin-inline: auto;
   padding-inline: var(--space-md);
   padding-block: clamp(64px, 14vh, 140px) var(--space-xl);
