@@ -8,39 +8,56 @@ const content = {
   name: "Michelle Azevedo",
   role: "Product Engineer",
   bio: [
-    "I'm Michelle, a product designer based in Ho Chi Minh City, Vietnam. I design digital interfaces that solve challenges and amplify user experiences, turning strategic goals into reality.",
-    "I experiment with tools like v0 to prototype swiftly, focusing on clean, impactful solutions that balance creativity and functionality.",
+    "I'm Michelle, a product engineer based in São Paulo, Brazil. I'm currently building Moradiah, a proptech that helps Brazilian families go from renting to owning — property search, legal checks, and financing in one place.",
+    "Before that I spent six years automating work that used to take entire teams: OCR pipelines that retrieved millions of fiscal documents in days instead of weeks, claims-approval bots for US health benefits, and a native macOS analytics app shipped through the full Apple pipeline. I own the whole path — process discovery, architecture, code, deployment — and these days that increasingly means putting AI in the loop.",
   ],
   email: "ola@micazev.com",
   availability: "Available for September",
   experience: [
     {
-      company: "TechNova",
-      years: "2023 - present",
+      company: "MP Consultoria Contábil",
+      years: "2022 - 2024",
       description:
-        "Leading UX design for cutting-edge AI-powered productivity tools.",
+        "Built a containerized Python framework automating tax declarations across Brazilian municipalities, and led the 3-person effort that retrieved millions of Nescafé fiscal notes in days — replacing weeks of work for a 20-person team.",
     },
     {
-      company: "QuantumLeap",
-      years: "2021 - 2023",
+      company: "Evope",
+      years: "2022 - 2023",
       description:
-        "Spearheaded the design of quantum computing visualization interfaces, bridging complex data with intuitive user experiences.",
+        "Ported a Windows C++ workplace-analytics platform to native macOS in Swift and Objective-C — encrypted local-first storage, real-time sync, and the full Apple signing and notarization pipeline.",
     },
     {
-      company: "EcoSphere",
-      years: "2019 - 2021",
+      company: "WEX",
+      years: "2021 - 2022",
       description:
-        "Designed sustainable product packaging and digital experiences for eco-friendly consumer goods.",
+        "Built the UiPath bots behind WEX Health's claims auto-approval pipeline, automating three claim queues across OnBase and the Health Cloud admin portal.",
+    },
+    {
+      company: "Wildlife Studios",
+      years: "2021 - 2022",
+      description:
+        "Built Python and Selenium automation for Oracle Cloud's GRC module, with four bots running across SIT, UAT, and production environments.",
+    },
+    {
+      company: "Xcelis",
+      years: "2020 - 2022",
+      description:
+        "Mapped and automated logistics and retail operations for ArcelorMittal, C&A, and VTEX — from process discovery to bots and automated reporting.",
+    },
+    {
+      company: "Deloitte",
+      years: "2019 - 2020",
+      description:
+        "Built OCR-driven bots parsing high-volume tax documents into structured data; earned the UiPath Advanced Developer certification.",
     },
   ],
   links: [
     { label: "Email", href: "mailto:ola@micazev.com" },
-    { label: "Twitter", href: "https://twitter.com/micazev" },
-    { label: "Dribbble", href: "https://dribbble.com/micazev" },
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/micazev" },
     { label: "GitHub", href: "https://github.com/micazev" },
   ],
-  timeZone: "Asia/Ho_Chi_Minh",
-  timeZoneAbbr: "ICT",
+  timeZone: "America/Sao_Paulo",
+  timeZoneAbbr: "BRT",
 };
 
 /* ------------------------------------------------------------------ */
@@ -96,7 +113,7 @@ const LocalTime = ({ timeZone, abbr }) => {
   }, [timeZone]);
 
   return (
-    <p className="clock" aria-label={`Current time in Ho Chi Minh City`}>
+    <p className="clock" aria-label={`Current time in São Paulo`}>
       {now ? `${now} ${abbr}` : " "}
     </p>
   );
@@ -171,7 +188,7 @@ export const Head = () => (
     <title>Michelle Azevedo</title>
     <meta
       name="description"
-      content="Michelle Azevedo — product designer based in Ho Chi Minh City, Vietnam."
+      content="Michelle Azevedo — product engineer based in São Paulo, Brazil. Building Moradiah, a proptech for first-time homeowners."
     />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
   </>
