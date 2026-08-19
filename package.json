@@ -1,0 +1,18 @@
+{
+  "name": "micazev.com",
+  "private": true,
+  "description": "Personal portfolio of Michelle Azevedo",
+  "version": "1.0.0",
+  "scripts": {
+    "develop": "gatsby develop",
+    "start": "gatsby develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean"
+  },
+  "dependencies": {
+    "gatsby": "^5.14.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  }
+}

@@ -1,0 +1,280 @@
+/* ------------------------------------------------------------------ */
+/*  micazev.com — global styles                                        */
+/*  Grayscale system: one ink, two recessive grays, one green signal.  */
+/* ------------------------------------------------------------------ */
+
+:root {
+  --ground: #ffffff;
+  --ink: #131316;          /* title, names, status, links            */
+  --ink-body: #3f3f46;     /* paragraphs, role descriptions          */
+  --ink-muted: #71717a;    /* subtitle, dates                        */
+  --ink-faint: #a1a1aa;    /* section labels, clock                  */
+  --signal: #22c55e;       /* availability dot — the only color      */
+
+  --space-xs: 8px;
+  --space-sm: 16px;
+  --space-md: 24px;
+  --space-lg: 48px;
+  --space-xl: 64px;
+
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica,
+    Arial, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+::selection {
+  background: var(--ink);
+  color: var(--ground);
+}
+
+/* ---- page column --------------------------------------------------- */
+
+.page {
+  max-width: 388px; /* 340px content + side padding */
+  margin-inline: auto;
+  padding-inline: var(--space-md);
+  padding-block: clamp(64px, 14vh, 140px) var(--space-xl);
+}
+
+/* ---- header -------------------------------------------------------- */
+
+.name {
+  font-size: 24px;
+  font-weight: 650;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+}
+
+.role {
+  margin-top: var(--space-xs);
+  color: var(--ink-muted);
+}
+
+/* ---- bio ----------------------------------------------------------- */
+
+.bio {
+  margin-top: var(--space-lg);
+  color: var(--ink-body);
+}
+
+.bio p + p {
+  margin-top: var(--space-sm);
+}
+
+/* ---- CTA + availability ------------------------------------------- */
+
+.actions {
+  margin-top: var(--space-lg);
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-sm) 20px;
+}
+
+.email-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--ink);
+  color: var(--ground);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1;
+  padding: 11px 16px 11px 20px;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+}
+
+.email-button svg {
+  transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.email-button:hover {
+  background: #2e2e33;
+}
+
+.email-button:hover svg {
+  transform: translateX(2px);
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--signal);
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.16);
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.16);
+  }
+  50% {
+    box-shadow: 0 0 0 5px rgba(34, 197, 94, 0.08);
+  }
+}
+
+.status-dot {
+  animation: breathe 2.8s ease-in-out infinite;
+}
+
+/* ---- sections ------------------------------------------------------ */
+
+.section {
+  margin-top: var(--space-xl);
+}
+
+.section-label {
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: var(--space-md);
+}
+
+/* ---- experience ---------------------------------------------------- */
+
+.entries {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.entry-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-sm);
+}
+
+.entry-company {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.entry-years {
+  color: var(--ink-muted);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.entry-desc {
+  margin-top: 6px;
+  color: var(--ink-body);
+}
+
+/* ---- contact links ------------------------------------------------- */
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm) var(--space-md);
+}
+
+.links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--ink);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.links a svg {
+  color: var(--ink-muted);
+  transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+    color 0.15s ease;
+}
+
+.links a:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+}
+
+.links a:hover svg {
+  transform: translate(1.5px, -1.5px);
+  color: var(--ink);
+}
+
+/* ---- clock --------------------------------------------------------- */
+
+.clock {
+  margin-top: var(--space-xl);
+  color: var(--ink-faint);
+  font-variant-numeric: tabular-nums;
+  min-height: 22px; /* reserve the line before hydration */
+}
+
+/* ---- focus --------------------------------------------------------- */
+
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.email-button:focus-visible {
+  outline-offset: 3px;
+  border-radius: 999px;
+}
+
+/* ---- entrance ------------------------------------------------------ */
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal {
+  animation: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    animation: none;
+  }
+  .status-dot {
+    animation: none;
+  }
+  .email-button svg,
+  .links a svg {
+    transition: none;
+  }
+}
