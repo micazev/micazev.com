@@ -8,9 +8,13 @@ const content = {
   name: "Michelle Azevedo",
   role: "Product Software Engineer",
   bio: [
-    "I'm Michelle, a product software engineer building Moradiah, a proptech that helps Brazilian families go from renting to owning: property search, legal checks, and financing in one place. It's a deeply human product too: lawyers and real estate agents find their next clients through Moradiah, and families find professionals they can trust.",
-    "Before that, I spent six years split between automation — OCR pipelines turning millions of fiscal documents into structured data in days instead of weeks — and building software, like the workplace-analytics platform I ported to native macOS app.",
-    "Process discovery, architecture, code, deployment... I'm putting all of that experience into building simple products that people actually use and environments where AI has no choice but to ship good, reliable code, whether that means AI in the loop or AI first.",
+    "Hey! I'm Michelle, a product software engineer who loves turning people's ideas into real life products.",
+    "Almost a decade in, from enterprise to startups to solo builds, I've done the whole arc: process discovery, architecture, code, deployment. These days I'm putting all of it into simple products people actually use.",
+    "Lately I'm also having fun with a different problem: designing environments where AI has no choice but to ship good, reliable code — AI in the loop or AI first."
+  ],
+  bioExtended: [
+    "Still here? Nice. So, right now I'm building Moradiah, a proptech helping Brazilian families go from renting to owning: property search, legal checks, and financing in one place. It's a deeply human product: lawyers and real estate agents find their next clients through Moradiah, and families find professionals they can trust.",
+    "Before that, I spent six years split between automation — OCR pipelines turning millions of fiscal documents into structured data in days instead of weeks — and building little softwares, like a workplace-analytics platform I ported to native macOS, or a like a workplace-analytics platform I ported to native macOS, or a containerized Python framework that accounting firms ran across dozens of Brazilian municipalities."
   ],
   email: "ola@micazev.com",
   availability: "Available for September",
@@ -170,6 +174,11 @@ const IndexPage = () => (
     <LocalTime timeZone={content.timeZone} abbr={content.timeZoneAbbr} />
 
 
+        <section className="bio reveal" style={{ animationDelay: "60ms" }}>
+      {content.bioExtended.map((paragraph) => (
+        <p key={paragraph}>{paragraph}</p>
+      ))}
+    </section>
     <section className="section reveal" style={{ animationDelay: "180ms" }}>
       <h2 className="section-label">Experience</h2>
       <div className="entries">
