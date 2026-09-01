@@ -14,7 +14,7 @@ const content = {
   ],
   bioExtended: [
     "Still here? Nice. So, right now I'm building Moradiah, a proptech helping Brazilian families go from renting to owning: property search, legal checks, and financing in one place. It's a deeply human product: lawyers and real estate agents find their next clients through Moradiah, and families find professionals they can trust.",
-    "Before that, I spent six years split between automation — OCR pipelines turning millions of fiscal documents into structured data in days instead of weeks — and building little softwares, like a workplace-analytics platform I ported to native macOS, or a like a workplace-analytics platform I ported to native macOS, or a containerized Python framework that accounting firms ran across dozens of Brazilian municipalities."
+    "Before that, I spent six years split between automation — OCR pipelines turning millions of fiscal documents into structured data in days instead of weeks — and building little softwares, like a workplace-analytics platform I ported to native macOS, or a containerized Python framework that accounting firms ran across dozens of Brazilian municipalities."
   ],
   email: "ola@micazev.com",
   availability: "Available for September",
