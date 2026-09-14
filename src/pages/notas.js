@@ -47,26 +47,31 @@ const NotasPage = () => {
 
   return (
     <main className="notas-page" lang={t.htmlLang}>
-      <div className="notas-lang" role="group" aria-label="Language">
-        <button
-          type="button"
-          className={lang === "en" ? "is-active" : undefined}
-          onClick={() => setLanguage("en")}
-          aria-pressed={lang === "en"}
-        >
-          en
-        </button>
-        <span className="notas-lang-sep" aria-hidden="true">
-          |
-        </span>
-        <button
-          type="button"
-          className={lang === "pt" ? "is-active" : undefined}
-          onClick={() => setLanguage("pt")}
-          aria-pressed={lang === "pt"}
-        >
-          pt
-        </button>
+      <div className="notas-topbar">
+        <a className="notas-home" href="/">
+          Michelle Azevedo
+        </a>
+        <div className="notas-lang" role="group" aria-label="Language">
+          <button
+            type="button"
+            className={lang === "en" ? "is-active" : undefined}
+            onClick={() => setLanguage("en")}
+            aria-pressed={lang === "en"}
+          >
+            en
+          </button>
+          <span className="notas-lang-sep" aria-hidden="true">
+            |
+          </span>
+          <button
+            type="button"
+            className={lang === "pt" ? "is-active" : undefined}
+            onClick={() => setLanguage("pt")}
+            aria-pressed={lang === "pt"}
+          >
+            pt
+          </button>
+        </div>
       </div>
 
       <header className="notas-header reveal">
