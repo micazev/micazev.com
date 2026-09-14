@@ -81,6 +81,7 @@ body {
 
 header .socials {
   margin-top: 12px;
+  gap: 20px;
 }
 
 .socials a {
