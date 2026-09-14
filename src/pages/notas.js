@@ -47,35 +47,35 @@ const NotasPage = () => {
 
   return (
     <main className="notas-page" lang={t.htmlLang}>
-      <div className="notas-topbar">
-        <a className="notas-home" href="/">
-          Michelle Azevedo
-        </a>
-        <div className="notas-lang" role="group" aria-label="Language">
-          <button
-            type="button"
-            className={lang === "en" ? "is-active" : undefined}
-            onClick={() => setLanguage("en")}
-            aria-pressed={lang === "en"}
-          >
-            en
-          </button>
-          <span className="notas-lang-sep" aria-hidden="true">
-            |
-          </span>
-          <button
-            type="button"
-            className={lang === "pt" ? "is-active" : undefined}
-            onClick={() => setLanguage("pt")}
-            aria-pressed={lang === "pt"}
-          >
-            pt
-          </button>
-        </div>
-      </div>
+      <a className="notas-home" href="/">
+        Michelle Azevedo
+      </a>
 
       <header className="notas-header reveal">
-        <h1 className="notas-title">{t.title}</h1>
+        <div className="notas-title-row">
+          <h1 className="notas-title">{t.title}</h1>
+          <div className="notas-lang" role="group" aria-label="Language">
+            <button
+              type="button"
+              className={lang === "en" ? "is-active" : undefined}
+              onClick={() => setLanguage("en")}
+              aria-pressed={lang === "en"}
+            >
+              en
+            </button>
+            <span className="notas-lang-sep" aria-hidden="true">
+              |
+            </span>
+            <button
+              type="button"
+              className={lang === "pt" ? "is-active" : undefined}
+              onClick={() => setLanguage("pt")}
+              aria-pressed={lang === "pt"}
+            >
+              pt
+            </button>
+          </div>
+        </div>
         <p className="notas-blurb">{t.blurb}</p>
       </header>
 
