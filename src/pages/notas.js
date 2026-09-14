@@ -5,7 +5,7 @@ const copy = {
   en: {
     title: "notas",
     blurb:
-      "Notes on yoga, travel, tools, and whatever else I'm figuring out — older Medium writing, collected here.",
+      "Notes on yoga, travel, tools, and whatever else I'm figuring out.",
     section: "Past notes",
     htmlLang: "en",
   },
