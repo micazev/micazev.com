@@ -12,7 +12,7 @@ const copy = {
   pt: {
     title: "notas",
     blurb:
-      "Notas sobre yoga, viagem, ferramentas e o que mais estiver na cabeça — textos antigos do Medium, reunidos aqui.",
+      "Notas sobre yoga, viagem, ferramentas e o que mais estiver na cabeça.",
     section: "Notas anteriores",
     htmlLang: "pt-BR",
   },

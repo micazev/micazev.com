@@ -1,15 +1,6 @@
 {
   "posts": [
     {
-      "slug": "it-s-not-even-worth-your-wi-fi-bill",
-      "date": "2025-02-03",
-      "title": {
-        "en": "It's not even worth your Wi-Fi bill 🤣🤣🤣",
-        "pt": "Nem vale a conta do Wi-Fi 🤣🤣🤣"
-      },
-      "originalLang": "en"
-    },
-    {
       "slug": "chatgpt-updates",
       "date": "2025-01-22",
       "title": {
@@ -24,24 +15,6 @@
       "title": {
         "en": "traveling alone",
         "pt": "viajando sozinha"
-      },
-      "originalLang": "en"
-    },
-    {
-      "slug": "thanks-darekar",
-      "date": "2024-12-14",
-      "title": {
-        "en": "thanks, Darekar!",
-        "pt": "obrigada, Darekar!"
-      },
-      "originalLang": "en"
-    },
-    {
-      "slug": "i-would-never-imagine-in-my-life-reading-jounaling-is-punk-as-fuck-nice-text",
-      "date": "2024-08-07",
-      "title": {
-        "en": "i would never imagine in my life reading \"journaling is punk as fuck\" 😂♥️ nice text",
-        "pt": "nunca imaginei na vida ler \"journaling is punk as fuck\" 😂♥️ texto bom"
       },
       "originalLang": "en"
     },
@@ -186,15 +159,6 @@
       "title": {
         "en": "How did we become people who buy something every day?",
         "pt": "Como nos tornamos pessoas que compram algo todo dia?"
-      },
-      "originalLang": "en"
-    },
-    {
-      "slug": "thanks",
-      "date": "2023-02-02",
-      "title": {
-        "en": "thanks!",
-        "pt": "obrigada!"
       },
       "originalLang": "en"
     },
