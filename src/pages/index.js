@@ -38,10 +38,6 @@ const content = {
       name: "Análise Matrícula",
       href: "https://analisematricula.com",
     },
-    {
-      name: "BidYourLook",
-      href: "https://bidyourlook.com",
-    },
   ],
   experience: [
     {
