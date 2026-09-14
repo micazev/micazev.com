@@ -6,7 +6,6 @@ import * as React from "react";
 
 const content = {
   name: "Michelle Azevedo",
-  role: "Product Software Engineer",
   bio: [
     "Hey! I'm Michelle, a product software engineer who loves turning people's ideas into real life products.",
   ],
@@ -209,7 +208,6 @@ const IndexPage = () => (
     <header className="reveal">
       <h1 className="name">{content.name}</h1>
       <Socials items={content.socials} label="Social media" />
-      <p className="role">{content.role}</p>
     </header>
 
     <section className="bio reveal" style={{ animationDelay: "60ms" }}>
