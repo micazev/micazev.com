@@ -11,6 +11,13 @@ const content = {
   ],
   email: "ola@micazev.com",
   availability: "Available for September",
+  notas: {
+    title: "notas",
+    blurb:
+      "Notes on yoga, travel, tools, and whatever else I'm figuring out.",
+    linkLabel: "Read previous notes",
+    href: "/notas",
+  },
   socials: [
     { label: "TikTok", icon: "tiktok", href: "https://www.tiktok.com/@micazev" },
     { label: "Instagram", icon: "instagram", href: "https://www.instagram.com/micazev/" },
@@ -223,7 +230,16 @@ const IndexPage = () => (
       </span>
     </div>
 
-    <section className="section reveal" style={{ animationDelay: "180ms" }}>
+    <section className="notas-promo reveal" style={{ animationDelay: "180ms" }}>
+      <h2 className="notas-promo-title">{content.notas.title}</h2>
+      <p className="notas-promo-blurb">{content.notas.blurb}</p>
+      <a className="notas-promo-link" href={content.notas.href}>
+        {content.notas.linkLabel}
+        <span aria-hidden="true"> →</span>
+      </a>
+    </section>
+
+    <section className="section reveal" style={{ animationDelay: "220ms" }}>
       <h2 className="section-label">Current projects</h2>
       <div className="entries">
         {content.projects.map((project) => (
@@ -252,7 +268,7 @@ const IndexPage = () => (
       </div>
     </section>
 
-    <details className="past-work reveal" style={{ animationDelay: "240ms" }}>
+    <details className="past-work reveal" style={{ animationDelay: "280ms" }}>
       <summary>
         Past work
         <ChevronRight />
