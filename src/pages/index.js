@@ -219,18 +219,7 @@ const IndexPage = () => (
       ))}
     </section>
 
-    <div className="actions reveal" style={{ animationDelay: "120ms" }}>
-      <a className="email-button" href={`mailto:${content.email}`}>
-        Send an email
-        <ChevronRight />
-      </a>
-      <span className="status">
-        <span className="status-dot" aria-hidden="true" />
-        {content.availability}
-      </span>
-    </div>
-
-    <section className="notas-promo reveal" style={{ animationDelay: "180ms" }}>
+    <section className="notas-promo reveal" style={{ animationDelay: "120ms" }}>
       <h2 className="notas-promo-title">{content.notas.title}</h2>
       <p className="notas-promo-blurb">{content.notas.blurb}</p>
       <a className="notas-promo-link" href={content.notas.href}>
@@ -239,7 +228,7 @@ const IndexPage = () => (
       </a>
     </section>
 
-    <section className="section reveal" style={{ animationDelay: "220ms" }}>
+    <section className="section reveal" style={{ animationDelay: "180ms" }}>
       <h2 className="section-label">Current projects</h2>
       <div className="entries">
         {content.projects.map((project) => (
@@ -267,6 +256,17 @@ const IndexPage = () => (
         ))}
       </div>
     </section>
+
+    <div className="actions reveal" style={{ animationDelay: "220ms" }}>
+      <a className="email-button" href={`mailto:${content.email}`}>
+        Send an email
+        <ChevronRight />
+      </a>
+      <span className="status">
+        <span className="status-dot" aria-hidden="true" />
+        {content.availability}
+      </span>
+    </div>
 
     <details className="past-work reveal" style={{ animationDelay: "280ms" }}>
       <summary>
