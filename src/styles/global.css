@@ -367,3 +367,130 @@ header .socials {
     transition: none;
   }
 }
+
+/* ---- /notas -------------------------------------------------------- */
+
+.notas-page {
+  --notas-ground: #f6f6f4;
+  max-width: 640px;
+  margin-inline: auto;
+  padding-inline: var(--space-md);
+  padding-block: clamp(48px, 10vh, 96px) var(--space-xl);
+  min-height: 100vh;
+  background: var(--notas-ground);
+  position: relative;
+}
+
+/* full-bleed ground behind the narrow column */
+body:has(.notas-page) {
+  background: #f6f6f4;
+}
+
+.notas-lang {
+  position: absolute;
+  top: clamp(24px, 5vh, 48px);
+  right: var(--space-md);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--ink-muted);
+}
+
+.notas-lang button {
+  appearance: none;
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: var(--ink-faint);
+  cursor: pointer;
+}
+
+.notas-lang button.is-active {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.notas-lang button:hover {
+  color: var(--ink);
+}
+
+.notas-lang-sep {
+  color: var(--ink-faint);
+  user-select: none;
+}
+
+.notas-header {
+  margin-top: var(--space-lg);
+}
+
+.notas-title {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.notas-blurb {
+  margin-top: var(--space-sm);
+  max-width: 36em;
+  color: var(--ink-body);
+  line-height: 1.55;
+}
+
+.notas-section {
+  margin-top: var(--space-xl);
+}
+
+.notas-section-label {
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: var(--space-sm);
+}
+
+.notas-list {
+  list-style: none;
+  padding: 0;
+  border-top: 1px solid #e4e4e7;
+}
+
+.notas-item {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-md);
+  padding-block: 18px;
+  border-bottom: 1px solid #e4e4e7;
+}
+
+.notas-item-title {
+  font-size: 15px;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  line-height: 1.35;
+  color: var(--ink);
+}
+
+.notas-item-date {
+  flex-shrink: 0;
+  color: var(--ink-muted);
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+@media (max-width: 520px) {
+  .notas-item {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .notas-item-date {
+    white-space: normal;
+  }
+}
