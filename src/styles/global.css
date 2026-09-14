@@ -118,7 +118,7 @@ header .socials {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: var(--space-sm) 20px;
+  gap: var(--space-sm) 32px;
 }
 
 .email-button {
