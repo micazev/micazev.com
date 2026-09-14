@@ -70,6 +70,35 @@ body {
   color: var(--ink-muted);
 }
 
+/* ---- social icons -------------------------------------------------- */
+
+.socials {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+header .socials {
+  margin-top: 12px;
+}
+
+.socials a {
+  display: flex;
+  color: var(--ink-muted);
+  transition: color 0.15s ease, transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.socials a:hover {
+  color: var(--ink);
+  transform: translateY(-1px);
+}
+
+.project .socials {
+  margin-top: 8px;
+  gap: 10px;
+}
+
 /* ---- bio ----------------------------------------------------------- */
 
 .bio {
@@ -193,38 +222,77 @@ body {
   color: var(--ink-body);
 }
 
-/* ---- contact links ------------------------------------------------- */
+/* ---- current projects ---------------------------------------------- */
 
-.links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-sm) var(--space-md);
-}
-
-.links a {
+.project-url {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  color: var(--ink);
-  font-weight: 500;
+  color: var(--ink-muted);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
   text-decoration: none;
 }
 
-.links a svg {
-  color: var(--ink-muted);
+.project-url svg {
+  color: var(--ink-faint);
   transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1),
     color 0.15s ease;
 }
 
-.links a:hover {
+.project-url:hover {
+  color: var(--ink);
   text-decoration: underline;
   text-underline-offset: 4px;
   text-decoration-thickness: 1px;
 }
 
-.links a:hover svg {
+.project-url:hover svg {
   transform: translate(1.5px, -1.5px);
   color: var(--ink);
+}
+
+/* ---- past work (collapsed) ----------------------------------------- */
+
+.past-work {
+  margin-top: var(--space-xl);
+}
+
+.past-work summary {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: fit-content;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+
+.past-work summary::-webkit-details-marker,
+.past-work summary::marker {
+  display: none;
+  content: "";
+}
+
+.past-work summary svg {
+  transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.past-work[open] summary svg {
+  transform: rotate(90deg);
+}
+
+.past-work summary:hover {
+  color: var(--ink-muted);
+}
+
+.past-work .entries {
+  margin-top: var(--space-md);
 }
 
 /* ---- clock --------------------------------------------------------- */
@@ -293,7 +361,9 @@ body {
     animation: none;
   }
   .email-button svg,
-  .links a svg {
+  .project-url svg,
+  .past-work summary svg,
+  .socials a {
     transition: none;
   }
 }
