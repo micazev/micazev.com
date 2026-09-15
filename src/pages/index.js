@@ -11,12 +11,12 @@ const content = {
   ],
   email: "ola@micazev.com",
   availability: "Available for September",
-  notas: {
-    title: "notas",
+  notes: {
+    title: "notes",
     blurb:
       "Notes on yoga, travel, tools, and whatever else I'm figuring out.",
     linkLabel: "Read previous notes",
-    href: "/notas",
+    href: "/notes",
   },
   socials: [
     { label: "TikTok", icon: "tiktok", href: "https://www.tiktok.com/@micazev" },
@@ -219,11 +219,11 @@ const IndexPage = () => (
       ))}
     </section>
 
-    <section className="notas-promo reveal" style={{ animationDelay: "120ms" }}>
-      <h2 className="notas-promo-title">{content.notas.title}</h2>
-      <p className="notas-promo-blurb">{content.notas.blurb}</p>
-      <a className="notas-promo-link" href={content.notas.href}>
-        {content.notas.linkLabel}
+    <section className="notes-promo reveal" style={{ animationDelay: "120ms" }}>
+      <h2 className="notes-promo-title">{content.notes.title}</h2>
+      <p className="notes-promo-blurb">{content.notes.blurb}</p>
+      <a className="notes-promo-link" href={content.notes.href}>
+        {content.notes.linkLabel}
         <span aria-hidden="true"> →</span>
       </a>
     </section>
