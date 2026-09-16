@@ -6,11 +6,13 @@ import {
   NotesShell,
   NoteBackRow,
 } from "../components/notes";
+import { htmlForLang } from "../components/note-html.cjs";
 
 const NotePage = ({ data }) => {
   const [lang, setLanguage] = useNotesLang();
   const { html, frontmatter } = data.markdownRemark;
   const title = lang === "pt" ? frontmatter.titlePt : frontmatter.titleEn;
+  const body = htmlForLang(html, lang);
 
   return (
     <NotesShell lang={lang}>
@@ -28,7 +30,7 @@ const NotePage = ({ data }) => {
 
         <div
           className="note-body"
-          dangerouslySetInnerHTML={{ __html: html }}
+          dangerouslySetInnerHTML={{ __html: body }}
         />
       </article>
     </NotesShell>
