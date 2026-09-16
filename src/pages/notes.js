@@ -1,7 +1,7 @@
 import * as React from "react";
 import { graphql, Link } from "gatsby";
 import {
-  formatDate,
+  NoteTags,
   useNotesLang,
   NotesShell,
   NotesIndexHeader,
@@ -24,16 +24,18 @@ const NotesPage = ({ data }) => {
         <h2 className="notes-section-label">{t.section}</h2>
         <ul className="notes-list">
           {posts.map((post) => {
-            const { slug, date, titleEn, titlePt } = post.frontmatter;
+            const { slug, tags, titleEn, titlePt } = post.frontmatter;
             const title = lang === "pt" ? titlePt : titleEn;
             return (
               <li className="notes-item" key={slug}>
                 <Link className="notes-item-title" to={`/notes/${slug}/`}>
                   {title}
                 </Link>
-                <time className="notes-item-date" dateTime={date}>
-                  {formatDate(date, lang)}
-                </time>
+                <NoteTags
+                  tags={tags}
+                  lang={lang}
+                  className="notes-item-tags"
+                />
               </li>
             );
           })}
@@ -62,7 +64,7 @@ export const query = graphql`
       nodes {
         frontmatter {
           slug
-          date
+          tags
           titleEn
           titlePt
         }

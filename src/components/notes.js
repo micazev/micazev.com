@@ -19,16 +19,29 @@ export const copy = {
   },
 };
 
-export const formatDate = (iso, lang) => {
-  if (!iso) return "";
-  const [y, m, d] = iso.split("-").map(Number);
-  const date = new Date(Date.UTC(y, m - 1, d));
-  return new Intl.DateTimeFormat(lang === "pt" ? "pt-BR" : "en-US", {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-    timeZone: "UTC",
-  }).format(date);
+export const tagLabels = {
+  yoga: { en: "yoga", pt: "yoga" },
+  meditation: { en: "meditation", pt: "meditação" },
+  ai: { en: "ai", pt: "ia" },
+  tools: { en: "tools", pt: "ferramentas" },
+  travel: { en: "travel", pt: "viagem" },
+  habits: { en: "habits", pt: "hábitos" },
+  health: { en: "health", pt: "saúde" },
+  books: { en: "books", pt: "livros" },
+  society: { en: "society", pt: "sociedade" },
+};
+
+export const NoteTags = ({ tags, lang, className }) => {
+  if (!tags || tags.length === 0) return null;
+  return (
+    <ul className={className}>
+      {tags.map((tag) => (
+        <li className="note-tag" key={tag}>
+          {(tagLabels[tag] && tagLabels[tag][lang]) || tag}
+        </li>
+      ))}
+    </ul>
+  );
 };
 
 export const useNotesLang = () => {

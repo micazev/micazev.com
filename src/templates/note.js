@@ -1,7 +1,7 @@
 import * as React from "react";
 import { graphql } from "gatsby";
 import {
-  formatDate,
+  NoteTags,
   useNotesLang,
   NotesShell,
   NoteBackRow,
@@ -19,9 +19,11 @@ const NotePage = ({ data }) => {
 
         <header className="note-header">
           <h1 className="note-title">{title}</h1>
-          <time className="note-date" dateTime={frontmatter.date}>
-            {formatDate(frontmatter.date, lang)}
-          </time>
+          <NoteTags
+            tags={frontmatter.tags}
+            lang={lang}
+            className="note-tags"
+          />
         </header>
 
         <div
@@ -51,7 +53,7 @@ export const query = graphql`
       html
       frontmatter {
         slug
-        date
+        tags
         titleEn
         titlePt
         originalLang
