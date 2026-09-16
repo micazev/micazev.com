@@ -8,6 +8,8 @@ export const copy = {
     section: "Past notes",
     htmlLang: "en",
     back: "All notes",
+    all: "all",
+    filterLabel: "Filter notes by tag",
   },
   pt: {
     title: "notes",
@@ -16,6 +18,8 @@ export const copy = {
     section: "Notas anteriores",
     htmlLang: "pt-BR",
     back: "Todas as notas",
+    all: "todas",
+    filterLabel: "Filtrar notas por tag",
   },
 };
 
@@ -29,6 +33,42 @@ export const tagLabels = {
   health: { en: "health", pt: "saúde" },
   books: { en: "books", pt: "livros" },
   society: { en: "society", pt: "sociedade" },
+};
+
+export const NoteFilter = ({ tags, active, lang, onSelect }) => {
+  const t = copy[lang];
+  return (
+    <nav
+      className="notes-filter reveal"
+      style={{ animationDelay: "60ms" }}
+      aria-label={t.filterLabel}
+    >
+      <button
+        type="button"
+        className={active ? "notes-filter-tag" : "notes-filter-tag is-active"}
+        aria-pressed={!active}
+        onClick={() => onSelect(null)}
+      >
+        {t.all}
+      </button>
+      {tags.map((tag) => {
+        const isActive = tag === active;
+        return (
+          <button
+            key={tag}
+            type="button"
+            className={
+              isActive ? "notes-filter-tag is-active" : "notes-filter-tag"
+            }
+            aria-pressed={isActive}
+            onClick={() => onSelect(isActive ? null : tag)}
+          >
+            {(tagLabels[tag] && tagLabels[tag][lang]) || tag}
+          </button>
+        );
+      })}
+    </nav>
+  );
 };
 
 export const NoteTags = ({ tags, lang, className }) => {

@@ -494,6 +494,45 @@ body:has(.notes-page) {
   line-height: 1.55;
 }
 
+.notes-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: var(--space-lg);
+}
+
+.notes-filter-tag {
+  font: inherit;
+  font-size: 13px;
+  line-height: 1;
+  color: var(--ink-muted);
+  background: none;
+  padding: 7px 12px;
+  border: 1px solid #e4e4e7;
+  border-radius: 999px;
+  cursor: pointer;
+  transition:
+    border-color 120ms ease,
+    color 120ms ease,
+    background-color 120ms ease;
+}
+
+.notes-filter-tag:hover {
+  border-color: var(--ink-faint);
+  color: var(--ink);
+}
+
+.notes-filter-tag:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+.notes-filter-tag.is-active {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--ground);
+}
+
 .notes-section {
   margin-top: var(--space-xl);
 }
