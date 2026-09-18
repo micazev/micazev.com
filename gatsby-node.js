@@ -1,4 +1,5 @@
 const path = require("path");
+const { availableLangs } = require("./src/components/note-html.cjs");
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage, createRedirect } = actions;
@@ -58,4 +59,23 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       isPermanent: true,
     });
   }
+};
+
+// Which translations a note actually ships, read from the body at build time
+// so a newly written translation is picked up without touching frontmatter.
+exports.createResolvers = ({ createResolvers }) => {
+  createResolvers({
+    MarkdownRemark: {
+      langs: {
+        type: "[String!]!",
+        resolve: (source) => {
+          const found = availableLangs(source.rawMarkdownBody);
+          if (found.length > 0) return found;
+
+          // No markers at all: the whole file is its original language.
+          return [source.frontmatter?.originalLang === "pt" ? "pt" : "en"];
+        },
+      },
+    },
+  });
 };

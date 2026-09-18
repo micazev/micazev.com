@@ -9,6 +9,7 @@ import {
   NotesIndexHeader,
   copy,
 } from "../components/notes";
+import { noteLang } from "../components/note-html.cjs";
 
 const NotesPage = ({ data }) => {
   const [lang, setLanguage] = useNotesLang();
@@ -72,10 +73,18 @@ const NotesPage = ({ data }) => {
           {visible.map((post) => {
             const { slug, tags: postTags, titleEn, titlePt } =
               post.frontmatter;
-            const title = lang === "pt" ? titlePt : titleEn;
+
+            // Same resolution the note page uses, so the title you click is
+            // the title and language you land on.
+            const shown = noteLang(post.langs, lang);
+            const title = shown === "pt" ? titlePt : titleEn;
             return (
               <li className="notes-item" key={slug}>
-                <Link className="notes-item-title" to={`/notes/${slug}/`}>
+                <Link
+                  className="notes-item-title"
+                  to={`/notes/${slug}/`}
+                  lang={copy[shown].htmlLang}
+                >
                   {title}
                 </Link>
                 <NoteTags
@@ -109,6 +118,7 @@ export const query = graphql`
   query NotesIndex {
     allMarkdownRemark(sort: { frontmatter: { date: DESC } }) {
       nodes {
+        langs
         frontmatter {
           slug
           tags
