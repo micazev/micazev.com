@@ -1,5 +1,7 @@
 import * as React from "react";
 
+import ShaderBackground from "../components/shader-background";
+
 /* ------------------------------------------------------------------ */
 /*  All copy lives here — edit this object, leave the markup alone.    */
 /* ------------------------------------------------------------------ */
@@ -207,96 +209,99 @@ const LocalTime = ({ timeZone, abbr }) => {
 };
 
 const IndexPage = () => (
-  <main className="page">
-    <header className="reveal">
-      <h1 className="name">{content.name}</h1>
-      <Socials items={content.socials} label="Social media" />
-    </header>
+  <>
+    <ShaderBackground />
+    <main className="page">
+      <header className="reveal">
+        <h1 className="name">{content.name}</h1>
+        <Socials items={content.socials} label="Social media" />
+      </header>
 
-    <section className="bio reveal" style={{ animationDelay: "60ms" }}>
-      {content.bio.map((paragraph) => (
-        <p key={paragraph}>{paragraph}</p>
-      ))}
-    </section>
-
-    <section className="notes-promo reveal" style={{ animationDelay: "120ms" }}>
-      <h2 className="notes-promo-title">{content.notes.title}</h2>
-      <p className="notes-promo-blurb">{content.notes.blurb}</p>
-      <a className="notes-promo-link" href={content.notes.href}>
-        {content.notes.linkLabel}
-        <span aria-hidden="true"> →</span>
-      </a>
-    </section>
-
-    <section className="section reveal" style={{ animationDelay: "180ms" }}>
-      <h2 className="section-label">Current projects</h2>
-      <div className="entries">
-        {content.projects.map((project) => (
-          <article className="project" key={project.name}>
-            <div className="entry-row">
-              <h3 className="entry-company">{project.name}</h3>
-              <a
-                className="project-url"
-                href={project.href}
-                target="_blank"
-                rel="noreferrer"
-              >
-                {displayHost(project.href)}
-                <ArrowUpRight />
-              </a>
-            </div>
-            {project.socials ? (
-              <Socials
-                items={project.socials}
-                size={14}
-                label={`${project.name} social media`}
-              />
-            ) : null}
-          </article>
+      <section className="bio reveal" style={{ animationDelay: "60ms" }}>
+        {content.bio.map((paragraph) => (
+          <p key={paragraph}>{paragraph}</p>
         ))}
+      </section>
+
+      <section className="notes-promo reveal" style={{ animationDelay: "120ms" }}>
+        <h2 className="notes-promo-title">{content.notes.title}</h2>
+        <p className="notes-promo-blurb">{content.notes.blurb}</p>
+        <a className="notes-promo-link" href={content.notes.href}>
+          {content.notes.linkLabel}
+          <span aria-hidden="true"> →</span>
+        </a>
+      </section>
+
+      <section className="section reveal" style={{ animationDelay: "180ms" }}>
+        <h2 className="section-label">Current projects</h2>
+        <div className="entries">
+          {content.projects.map((project) => (
+            <article className="project" key={project.name}>
+              <div className="entry-row">
+                <h3 className="entry-company">{project.name}</h3>
+                <a
+                  className="project-url"
+                  href={project.href}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {displayHost(project.href)}
+                  <ArrowUpRight />
+                </a>
+              </div>
+              {project.socials ? (
+                <Socials
+                  items={project.socials}
+                  size={14}
+                  label={`${project.name} social media`}
+                />
+              ) : null}
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <div className="actions reveal" style={{ animationDelay: "220ms" }}>
+        <a className="email-button" href={`mailto:${content.email}`}>
+          Send an email
+          <ChevronRight />
+        </a>
+        <span className="status">
+          <span className="status-dot" aria-hidden="true" />
+          {content.availability}
+        </span>
       </div>
-    </section>
 
-    <div className="actions reveal" style={{ animationDelay: "220ms" }}>
-      <a className="email-button" href={`mailto:${content.email}`}>
-        Send an email
-        <ChevronRight />
-      </a>
-      <span className="status">
-        <span className="status-dot" aria-hidden="true" />
-        {content.availability}
-      </span>
-    </div>
+      <details className="past-work reveal" style={{ animationDelay: "280ms" }}>
+        <summary>
+          Past work
+          <ChevronRight />
+        </summary>
+        <div className="entries">
+          {content.experience.map((job) => (
+            <article className="entry" key={job.company}>
+              <div className="entry-row">
+                <h3 className="entry-company">{job.company}</h3>
+                <span className="entry-years">{job.years}</span>
+              </div>
+              <p className="entry-desc">{job.description}</p>
+            </article>
+          ))}
+        </div>
+      </details>
 
-    <details className="past-work reveal" style={{ animationDelay: "280ms" }}>
-      <summary>
-        Past work
-        <ChevronRight />
-      </summary>
-      <div className="entries">
-        {content.experience.map((job) => (
-          <article className="entry" key={job.company}>
-            <div className="entry-row">
-              <h3 className="entry-company">{job.company}</h3>
-              <span className="entry-years">{job.years}</span>
-            </div>
-            <p className="entry-desc">{job.description}</p>
-          </article>
-        ))}
-      </div>
-    </details>
+      <LocalTime timeZone={content.timeZone} abbr={content.timeZoneAbbr} />
 
-    <LocalTime timeZone={content.timeZone} abbr={content.timeZoneAbbr} />
-
-    <footer className="footer reveal" style={{ animationDelay: "320ms" }}>
-      <blockquote className="quote">
-        <p>“{content.quote.text}”</p>
-        <p className="quote-attribution">
-          — {content.quote.author}, <cite>{content.quote.source}</cite>
-        </p>
-      </blockquote>
-    </footer>
-  </main>
+      <footer className="footer reveal" style={{ animationDelay: "320ms" }}>
+        <blockquote className="quote">
+          <p>“{content.quote.text}”</p>
+          <p className="quote-attribution">
+            — {content.quote.author}, <cite>{content.quote.source}</cite>
+          </p>
+        </blockquote>
+      </footer>
+    </main>
+  </>
 );
 
 export default IndexPage;

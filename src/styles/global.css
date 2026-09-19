@@ -47,9 +47,23 @@ body {
   color: var(--ground);
 }
 
+/* ---- shader background --------------------------------------------- */
+
+/* Fixed full-bleed canvas the home page column scrolls over. It sits in
+   normal flow order below .page rather than on a negative z-index, so it
+   never has to out-paint the body background. */
+.shader-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
 /* ---- page column --------------------------------------------------- */
 
 .page {
+  position: relative;
+  z-index: 1;
   max-width: 448px; /* 400px content + side padding */
   margin-inline: auto;
   padding-inline: var(--space-md);
