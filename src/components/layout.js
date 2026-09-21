@@ -55,12 +55,26 @@ const Nameplate = () => (
   </Link>
 );
 
-// .site-bar keeps both rows on the same --measure as the page column, so
-// the chrome lines up with the content instead of running full bleed.
+// partiallyActive so a single note keeps "notes" lit, and /tech keeps "tech".
+const NavLink = ({ to, children }) => (
+  <Link to={to} activeClassName="is-active" partiallyActive>
+    {children}
+  </Link>
+);
+
+// .site-bar runs wider than the page column on purpose: the chrome spans
+// the window, the reading column stays narrow underneath it.
 export const Header = () => (
   <header className="site-header">
     <div className="site-bar">
       <Nameplate />
+      <nav className="site-nav" aria-label="Sections">
+        <NavLink to="/notes/">notes</NavLink>
+        <span className="site-nav-sep" aria-hidden="true">
+          |
+        </span>
+        <NavLink to="/tech/">tech</NavLink>
+      </nav>
     </div>
   </header>
 );
@@ -68,7 +82,7 @@ export const Header = () => (
 export const Footer = () => (
   <footer className="site-footer">
     <div className="site-bar">
-      <Socials items={socials} label="Social media" />
+      <Socials items={socials} size={14} label="Social media" />
     </div>
   </footer>
 );

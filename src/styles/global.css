@@ -13,9 +13,10 @@
   --rule: #e4e4e7;         /* hairlines: chrome, list rows, tags     */
   --surface: var(--ground); /* the fixed header and footer bars      */
 
-  /* Width of the reading column. The header and footer bars align to
-     the same token, so the chrome never drifts off the page column. */
+  /* Two tracks: the reading column, and the wider one the header and
+     footer bars run on so the chrome spans the window above it. */
   --measure: 448px;        /* 400px content + side padding           */
+  --bar-measure: 1200px;
   --nameplate-w: clamp(150px, 16vw, 190px);
 
   --space-xs: 8px;
@@ -113,9 +114,49 @@ body {
 }
 
 .site-bar {
-  max-width: var(--measure);
+  max-width: var(--bar-measure);
   margin-inline: auto;
-  padding-inline: var(--space-md);
+  /* A tighter gutter than the page columns use, so the chrome reaches
+     wider than the text even on a phone, where both run full bleed. */
+  padding-inline: var(--space-sm);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+
+.site-footer .site-bar {
+  justify-content: flex-end;
+}
+
+/* ---- header menu ---------------------------------------------------- */
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+.site-nav a {
+  color: var(--ink-muted);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.site-nav a:hover {
+  color: var(--ink);
+}
+
+.site-nav a.is-active {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.site-nav-sep {
+  color: var(--ink-faint);
+  user-select: none;
 }
 
 /* ---- nameplate ------------------------------------------------------ */
@@ -123,6 +164,7 @@ body {
 .nameplate {
   display: block;
   width: var(--nameplate-w);
+  flex-shrink: 0;
   text-decoration: none;
 }
 
@@ -162,10 +204,12 @@ body {
 
 .site-footer .socials {
   flex-wrap: nowrap;
-  justify-content: space-between;
-  gap: 6px; /* floor; space-between does the real spacing */
-  max-width: 420px;
-  margin-inline: auto;
+  justify-content: flex-end;
+  gap: clamp(10px, 2.4vw, 16px);
+}
+
+.site-footer .socials a {
+  color: var(--ink);
 }
 
 /* ---- utilities ------------------------------------------------------ */
@@ -368,40 +412,6 @@ body {
   color: var(--ink-body);
 }
 
-/* ---- notes promo --------------------------------------------------- */
-
-.notes-promo {
-  margin-top: var(--space-xl);
-}
-
-.notes-promo-title {
-  font-size: 16px;
-  font-weight: 650;
-  letter-spacing: -0.01em;
-  line-height: 1.3;
-}
-
-.notes-promo-blurb {
-  margin-top: 8px;
-  color: var(--ink-body);
-  max-width: 36em;
-}
-
-.notes-promo-link {
-  display: inline-flex;
-  align-items: center;
-  margin-top: 14px;
-  color: var(--ink);
-  font-weight: 500;
-  text-decoration: none;
-}
-
-.notes-promo-link:hover {
-  text-decoration: underline;
-  text-underline-offset: 4px;
-  text-decoration-thickness: 1px;
-}
-
 /* ---- current projects ---------------------------------------------- */
 
 .project-url {
@@ -546,6 +556,31 @@ body {
   .socials a {
     transition: none;
   }
+}
+
+/* ---- /tech --------------------------------------------------------- */
+
+/* Projects, past work and a list of posts want the wider reading column
+   that /notes uses, but keep the white ground of the rest of the site. */
+body:has(.tech-page) {
+  --measure: 640px;
+}
+
+.tech-page {
+  max-width: var(--measure);
+  margin-inline: auto;
+  padding-inline: var(--space-md);
+  padding-block: clamp(24px, 5vh, 48px) var(--space-xl);
+}
+
+.tech-page .bio,
+.tech-page .section,
+.tech-page .past-work {
+  margin-top: var(--space-lg);
+}
+
+.tech-page .notes-section {
+  margin-top: var(--space-lg);
 }
 
 /* ---- /notes -------------------------------------------------------- */
