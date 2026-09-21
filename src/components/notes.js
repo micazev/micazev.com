@@ -127,12 +127,9 @@ export const LangToggle = ({ lang, setLanguage }) => (
 );
 
 export const NotesShell = ({ lang, children }) => (
-  <main className="notes-page" lang={copy[lang].htmlLang}>
-    <a className="notes-home" href="/">
-      Michelle Azevedo
-    </a>
+  <div className="notes-page" lang={copy[lang].htmlLang}>
     {children}
-  </main>
+  </div>
 );
 
 export const NotesIndexHeader = ({ lang, setLanguage }) => {

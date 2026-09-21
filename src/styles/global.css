@@ -10,6 +10,13 @@
   --ink-muted: #71717a;    /* subtitle, dates                        */
   --ink-faint: #a1a1aa;    /* section labels, clock                  */
   --signal: #22c55e;       /* availability dot — the only color      */
+  --rule: #e4e4e7;         /* hairlines: chrome, list rows, tags     */
+  --surface: var(--ground); /* the fixed header and footer bars      */
+
+  /* Width of the reading column. The header and footer bars align to
+     the same token, so the chrome never drifts off the page column. */
+  --measure: 448px;        /* 400px content + side padding           */
+  --nameplate-w: clamp(150px, 16vw, 190px);
 
   --space-xs: 8px;
   --space-sm: 16px;
@@ -47,11 +54,140 @@ body {
   color: var(--ground);
 }
 
+/* ---- app shell ------------------------------------------------------ */
+
+/* Three rows on a viewport-tall grid: header, content, footer. Only the
+   middle row scrolls, which keeps the chrome visible at every size
+   without taking it out of flow — nothing has to reserve space for a
+   bar whose height it cannot see. */
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+.app-shell {
+  height: 100vh; /* fallback for browsers without dvh */
+  height: 100dvh;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+}
+
+.app-main {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* ---- fixed chrome --------------------------------------------------- */
+
+.site-header,
+.site-footer {
+  position: relative;
+  z-index: 2; /* over .shader-bg (0) and the page column (1) */
+  padding-block: 10px;
+  background: var(--surface);
+}
+
+.site-header {
+  border-bottom: 1px solid var(--rule);
+}
+
+.site-footer {
+  border-top: 1px solid var(--rule);
+}
+
+/* Frosted rather than solid, so the home page gradient still reads
+   through the bars instead of being cropped to the middle band. */
+@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+  .site-header,
+  .site-footer {
+    background: color-mix(in srgb, var(--surface) 72%, transparent);
+    -webkit-backdrop-filter: blur(14px) saturate(160%);
+    backdrop-filter: blur(14px) saturate(160%);
+  }
+}
+
+.site-bar {
+  max-width: var(--measure);
+  margin-inline: auto;
+  padding-inline: var(--space-md);
+}
+
+/* ---- nameplate ------------------------------------------------------ */
+
+.nameplate {
+  display: block;
+  width: var(--nameplate-w);
+  text-decoration: none;
+}
+
+.nameplate-art {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.nameplate-handle,
+.nameplate-name {
+  font-family: var(--font-sans);
+}
+
+/* Sizes are viewBox user units, not pixels: the SVG scales them to
+   --nameplate-w, so the ratio between the two lines is fixed and the
+   gap between them tightens and loosens with the block as a whole. */
+.nameplate-handle {
+  font-size: 208px;
+  font-weight: 650;
+  fill: var(--ink);
+}
+
+.nameplate-name {
+  font-size: 88px;
+  font-weight: 500;
+  fill: var(--ink-muted);
+  transition: fill 0.15s ease;
+}
+
+.nameplate:hover .nameplate-name {
+  fill: var(--ink);
+}
+
+/* ---- footer socials ------------------------------------------------- */
+
+.site-footer .socials {
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  gap: 6px; /* floor; space-between does the real spacing */
+  max-width: 420px;
+  margin-inline: auto;
+}
+
+/* ---- utilities ------------------------------------------------------ */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* ---- shader background --------------------------------------------- */
 
-/* Fixed full-bleed canvas the home page column scrolls over. It sits in
-   normal flow order below .page rather than on a negative z-index, so it
-   never has to out-paint the body background. */
+/* Fixed full-bleed canvas the home page column scrolls over. Being fixed,
+   it escapes .app-main and still covers the viewport, including behind the
+   frosted bars. It sits in normal flow order below .page rather than on a
+   negative z-index, so it never has to out-paint the body background. */
 .shader-bg {
   position: fixed;
   inset: 0;
@@ -64,10 +200,10 @@ body {
 .page {
   position: relative;
   z-index: 1;
-  max-width: 448px; /* 400px content + side padding */
+  max-width: var(--measure);
   margin-inline: auto;
   padding-inline: var(--space-md);
-  padding-block: clamp(64px, 14vh, 140px) var(--space-xl);
+  padding-block: clamp(32px, 7vh, 72px) var(--space-xl);
 }
 
 /* ---- header -------------------------------------------------------- */
@@ -91,11 +227,6 @@ body {
   flex-wrap: wrap;
   align-items: center;
   gap: 12px;
-}
-
-header .socials {
-  margin-top: 12px;
-  gap: 20px;
 }
 
 .socials a {
@@ -354,9 +485,9 @@ header .socials {
   text-align: center;
 }
 
-/* ---- footer -------------------------------------------------------- */
+/* ---- closing quote -------------------------------------------------- */
 
-.footer {
+.page-quote {
   margin-top: var(--space-xl);
 }
 
@@ -419,34 +550,19 @@ header .socials {
 
 /* ---- /notes -------------------------------------------------------- */
 
-.notes-page {
-  --notes-ground: #f6f6f4;
-  max-width: 640px;
-  margin-inline: auto;
-  padding-inline: var(--space-md);
-  padding-block: clamp(32px, 6vh, 64px) var(--space-xl);
-  min-height: 100vh;
-  background: var(--notes-ground);
-}
-
-/* full-bleed ground behind the narrow column */
+/* Notes run in a wider column on a warmer ground. Both are set on the
+   body so the header and footer bars pick them up too. */
 body:has(.notes-page) {
+  --measure: 640px;
+  --surface: #f6f6f4;
   background: #f6f6f4;
 }
 
-.notes-home {
-  color: var(--ink);
-  font-size: 24px;
-  font-weight: 650;
-  letter-spacing: -0.015em;
-  line-height: 1.2;
-  text-decoration: none;
-}
-
-.notes-home:hover {
-  text-decoration: underline;
-  text-underline-offset: 4px;
-  text-decoration-thickness: 1px;
+.notes-page {
+  max-width: var(--measure);
+  margin-inline: auto;
+  padding-inline: var(--space-md);
+  padding-block: clamp(24px, 5vh, 48px) var(--space-xl);
 }
 
 .notes-lang {
@@ -484,7 +600,7 @@ body:has(.notes-page) {
 }
 
 .notes-header {
-  margin-top: var(--space-xl);
+  margin-top: 0;
 }
 
 .notes-title-row {
@@ -522,7 +638,7 @@ body:has(.notes-page) {
   color: var(--ink-muted);
   background: none;
   padding: 7px 12px;
-  border: 1px solid #e4e4e7;
+  border: 1px solid var(--rule);
   border-radius: 999px;
   cursor: pointer;
   transition:
@@ -563,7 +679,7 @@ body:has(.notes-page) {
 .notes-list {
   list-style: none;
   padding: 0;
-  border-top: 1px solid #e4e4e7;
+  border-top: 1px solid var(--rule);
 }
 
 .notes-item {
@@ -572,7 +688,7 @@ body:has(.notes-page) {
   justify-content: space-between;
   gap: var(--space-md);
   padding-block: 18px;
-  border-bottom: 1px solid #e4e4e7;
+  border-bottom: 1px solid var(--rule);
 }
 
 .notes-item-title {
@@ -588,7 +704,7 @@ body:has(.notes-page) {
   font-size: 13px;
   line-height: 1;
   padding: 5px 10px;
-  border: 1px solid #e4e4e7;
+  border: 1px solid var(--rule);
   border-radius: 999px;
   white-space: nowrap;
 }
@@ -619,7 +735,7 @@ body:has(.notes-page) {
 /* ---- note article -------------------------------------------------- */
 
 .note-article {
-  margin-top: var(--space-xl);
+  margin-top: 0;
 }
 
 .note-back {
@@ -695,7 +811,7 @@ body:has(.notes-page) {
 
 .note-body hr {
   border: 0;
-  border-top: 1px solid #e4e4e7;
+  border-top: 1px solid var(--rule);
   margin-block: 1.6em;
 }
 
