@@ -10,8 +10,7 @@
   --ink-muted: #71717a;    /* subtitle, dates                        */
   --ink-faint: #a1a1aa;    /* section labels, clock                  */
   --signal: #22c55e;       /* availability dot — the only color      */
-  --rule: #e4e4e7;         /* hairlines: chrome, list rows, tags     */
-  --surface: var(--ground); /* the fixed header and footer bars      */
+  --rule: #e4e4e7;         /* hairlines: list rows, tags             */
 
   /* Two tracks: the reading column, and the wider one the header and
      footer bars run on so the chrome spans the window above it. */
@@ -27,6 +26,11 @@
 
   --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica,
     Arial, sans-serif;
+
+  /* Nameplate only. Calibri leads the fallbacks because Carlito is a
+     metric-compatible clone of it, so a reader who never gets the webfont
+     still sees the same advance widths. */
+  --font-logo: "Carlito", Calibri, "Segoe UI", system-ui, sans-serif;
 }
 
 *,
@@ -91,26 +95,6 @@ body {
   position: relative;
   z-index: 2; /* over .shader-bg (0) and the page column (1) */
   padding-block: 10px;
-  background: var(--surface);
-}
-
-.site-header {
-  border-bottom: 1px solid var(--rule);
-}
-
-.site-footer {
-  border-top: 1px solid var(--rule);
-}
-
-/* Frosted rather than solid, so the home page gradient still reads
-   through the bars instead of being cropped to the middle band. */
-@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
-  .site-header,
-  .site-footer {
-    background: color-mix(in srgb, var(--surface) 72%, transparent);
-    -webkit-backdrop-filter: blur(14px) saturate(160%);
-    backdrop-filter: blur(14px) saturate(160%);
-  }
 }
 
 .site-bar {
@@ -177,21 +161,25 @@ body {
 
 .nameplate-handle,
 .nameplate-name {
-  font-family: var(--font-sans);
+  font-family: var(--font-logo);
+  font-weight: 400;
+  font-style: normal;
+  letter-spacing: 0;
+  text-transform: uppercase;
 }
 
 /* Sizes are viewBox user units, not pixels: the SVG scales them to
    --nameplate-w, so the ratio between the two lines is fixed and the
-   gap between them tightens and loosens with the block as a whole. */
+   gap between them tightens and loosens with the block as a whole.
+   They are tuned to Carlito uppercase, close enough under textLength
+   that the tracking correction stays small and positive. */
 .nameplate-handle {
-  font-size: 208px;
-  font-weight: 650;
+  font-size: 190px;
   fill: var(--ink);
 }
 
 .nameplate-name {
-  font-size: 88px;
-  font-weight: 500;
+  font-size: 80px;
   fill: var(--ink-muted);
   transition: fill 0.15s ease;
 }
@@ -585,11 +573,10 @@ body:has(.tech-page) {
 
 /* ---- /notes -------------------------------------------------------- */
 
-/* Notes run in a wider column on a warmer ground. Both are set on the
-   body so the header and footer bars pick them up too. */
+/* Notes run in a wider column on a warmer ground, set on the body so the
+   transparent chrome shows the same ground the column sits on. */
 body:has(.notes-page) {
   --measure: 640px;
-  --surface: #f6f6f4;
   background: #f6f6f4;
 }
 

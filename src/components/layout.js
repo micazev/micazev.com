@@ -29,14 +29,14 @@ const Nameplate = () => (
   <Link className="nameplate" to="/" aria-label={`${handle} — ${name}`}>
     <svg
       className="nameplate-art"
-      viewBox="0 0 1000 268"
+      viewBox="0 0 1000 222"
       aria-hidden="true"
       focusable="false"
     >
       <text
         className="nameplate-handle"
         x="0"
-        y="155"
+        y="128"
         textLength="1000"
         lengthAdjust="spacing"
       >
@@ -45,7 +45,7 @@ const Nameplate = () => (
       <text
         className="nameplate-name"
         x="0"
-        y="258"
+        y="212"
         textLength="1000"
         lengthAdjust="spacing"
       >
