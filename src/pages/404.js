@@ -2,7 +2,7 @@ import * as React from "react";
 import { Link } from "gatsby";
 
 const NotFoundPage = () => (
-  <main className="page">
+  <div className="page">
     <header className="reveal">
       <h1 className="name">Page not found</h1>
       <p className="role">There's nothing at this address.</p>
@@ -12,7 +12,7 @@ const NotFoundPage = () => (
         Back home
       </Link>
     </div>
-  </main>
+  </div>
 );
 
 export default NotFoundPage;

@@ -35,6 +35,9 @@ export const tagLabels = {
   society: { en: "society", pt: "sociedade" },
 };
 
+// Which of the tags above /tech treats as technical writing.
+export const techTags = ["ai", "tools"];
+
 export const NoteFilter = ({ tags, active, lang, onSelect }) => {
   const t = copy[lang];
   return (
@@ -127,12 +130,9 @@ export const LangToggle = ({ lang, setLanguage }) => (
 );
 
 export const NotesShell = ({ lang, children }) => (
-  <main className="notes-page" lang={copy[lang].htmlLang}>
-    <a className="notes-home" href="/">
-      Michelle Azevedo
-    </a>
+  <div className="notes-page" lang={copy[lang].htmlLang}>
     {children}
-  </main>
+  </div>
 );
 
 export const NotesIndexHeader = ({ lang, setLanguage }) => {
