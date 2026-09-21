@@ -16,7 +16,7 @@
      footer bars run on so the chrome spans the window above it. */
   --measure: 448px;        /* 400px content + side padding           */
   --bar-measure: 1200px;
-  --nameplate-w: clamp(150px, 16vw, 190px);
+  --nameplate-w: clamp(75px, 8vw, 95px);
 
   --space-xs: 8px;
   --space-sm: 16px;

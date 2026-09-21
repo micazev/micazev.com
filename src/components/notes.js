@@ -4,7 +4,7 @@ import { Link } from "gatsby";
 export const copy = {
   en: {
     title: "notes",
-    blurb: "Notes on yoga, travel, tools, and whatever else I'm figuring out.",
+    blurb: "Notes on whatever I'm figuring out.",
     section: "Past notes",
     htmlLang: "en",
     back: "All notes",
@@ -13,8 +13,7 @@ export const copy = {
   },
   pt: {
     title: "notes",
-    blurb:
-      "Notas sobre yoga, viagem, ferramentas e o que mais estiver na cabeça.",
+    blurb: "Notas sobre o que estiver na cabeça.",
     section: "Notas anteriores",
     htmlLang: "pt-BR",
     back: "Todas as notas",
