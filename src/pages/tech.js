@@ -3,80 +3,12 @@ import { graphql, Link } from "gatsby";
 
 import { Socials, ArrowUpRight, ChevronRight } from "../components/icons";
 import { NoteTags, techTags, useNotesLang, copy } from "../components/notes";
-import { noteLang } from "../components/note-html.cjs";
+import { groupTranslations, noteLang } from "../components/note-html.cjs";
+import content from "../../content/site/tech.json";
 
 /* ------------------------------------------------------------------ */
-/*  All copy lives here — edit this object, leave the markup alone.    */
-/* ------------------------------------------------------------------ */
-
-const content = {
-  bio: [
-    "Hey! I'm Michelle, a product software engineer who loves turning people's ideas into real life products.",
-  ],
-  email: "ola@micazev.com",
-  availability: "Available for September",
-  projects: [
-    {
-      name: "Moradiah",
-      href: "https://moradiah.com",
-      socials: [
-        { label: "LinkedIn", icon: "linkedin", href: "https://www.linkedin.com/company/moradiahapp/" },
-        { label: "TikTok", icon: "tiktok", href: "https://www.tiktok.com/@moradiah.app" },
-        { label: "Instagram", icon: "instagram", href: "https://www.instagram.com/moradiah.app/" },
-        { label: "YouTube", icon: "youtube", href: "https://www.youtube.com/@moradiahapp" },
-      ],
-    },
-    {
-      name: "Análise Matrícula",
-      href: "https://analisematricula.com",
-    },
-  ],
-  experience: [
-    {
-      company: "MP Consultoria Contábil",
-      years: "2022 - 2024",
-      description:
-        "Built a containerized Python framework automating tax declarations across Brazilian municipalities, and led the 3-person effort that retrieved millions of Nescafé fiscal notes in days, replacing weeks of work for a 20-person team.",
-    },
-    {
-      company: "Evope",
-      years: "2022 - 2023",
-      description:
-        "Ported a Windows C++ workplace-analytics platform to native macOS in Swift and Objective-C, encrypted local-first storage, real-time sync, and the full Apple signing and notarization pipeline.",
-    },
-    {
-      company: "WEX",
-      years: "2021 - 2022",
-      description:
-        "Built the UiPath bots behind WEX Health's claims auto-approval pipeline, automating three claim queues across OnBase and the Health Cloud admin portal.",
-    },
-    {
-      company: "Wildlife Studios",
-      years: "2021 - 2022",
-      description:
-        "Built Python and Selenium automation for Oracle Cloud's GRC module, with four bots running across SIT, UAT, and production environments.",
-    },
-    {
-      company: "Xcelis",
-      years: "2020 - 2022",
-      description:
-        "Mapped and automated logistics and retail operations for ArcelorMittal, C&A, and VTEX. From process discovery to bots and automated reporting.",
-    },
-    {
-      company: "Deloitte",
-      years: "2019 - 2020",
-      description:
-        "Built OCR-driven bots parsing high-volume tax documents into structured data; earned the UiPath Advanced Developer certification.",
-    },
-  ],
-  timeZone: "Asia/Ho_Chi_Minh",
-  timeZoneAbbr: "ICT",
-  quote: {
-    text: "We can only see a short distance ahead, but we can see plenty there that needs to be done.",
-    author: "Alan Turing",
-    source: "Computing machinery and intelligence",
-  },
-};
+/*  All copy lives in content/site/tech.json, edited in the CMS at     */
+/*  /admin under "Site copy". Leave the markup here alone.             */
 /* ------------------------------------------------------------------ */
 
 const displayHost = (href) =>
@@ -110,8 +42,8 @@ const TechPage = ({ data }) => {
   // No language toggle on this page; it follows whatever /notes was left on.
   const [lang] = useNotesLang();
 
-  const posts = data.allMarkdownRemark.nodes.filter((post) =>
-    (post.frontmatter.tags || []).some((tag) => techTags.includes(tag)),
+  const posts = groupTranslations(data.allMarkdownRemark.nodes).filter((post) =>
+    post.tags.some((tag) => techTags.includes(tag)),
   );
 
   return (
@@ -187,7 +119,7 @@ const TechPage = ({ data }) => {
           <h2 className="notes-section-label">Technical posts</h2>
           <ul className="notes-list">
             {posts.map((post) => {
-              const { slug, tags, titleEn, titlePt } = post.frontmatter;
+              const { slug, tags, titles } = post;
 
               // Same resolution /notes uses, so the title you click is the
               // title and language you land on.
@@ -199,7 +131,7 @@ const TechPage = ({ data }) => {
                     to={`/notes/${slug}/`}
                     lang={copy[shown].htmlLang}
                   >
-                    {shown === "pt" ? titlePt : titleEn}
+                    {titles[shown]}
                   </Link>
                   <NoteTags tags={tags} lang={lang} className="notes-item-tags" />
                 </li>
@@ -238,14 +170,20 @@ export const Head = () => (
 
 export const query = graphql`
   query TechNotes {
-    allMarkdownRemark(sort: { frontmatter: { date: DESC } }) {
+    allMarkdownRemark(
+      filter: { fields: { collection: { eq: "notes" } } }
+      sort: [{ frontmatter: { date: DESC } }, { fields: { lang: ASC } }]
+    ) {
       nodes {
-        langs
-        frontmatter {
+        fields {
           slug
+          lang
+          hasBody
+        }
+        frontmatter {
+          title
+          date
           tags
-          titleEn
-          titlePt
         }
       }
     }

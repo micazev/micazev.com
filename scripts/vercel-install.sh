@@ -18,7 +18,10 @@ else
   echo "warning: CONTENT_TOKEN is not set; the private submodule will not clone" >&2
 fi
 
-git submodule update --init --recursive
+# --remote builds the content repo's latest main rather than the commit this
+# repo pins, so a save in the CMS (/admin) goes live without bumping the
+# submodule pointer here.
+git submodule update --init --recursive --remote
 
 if [ ! -d content/notes ]; then
   echo "error: content/notes is missing after submodule update." >&2

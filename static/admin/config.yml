@@ -1,0 +1,166 @@
+# Sveltia CMS — https://sveltiacms.app/en/docs
+#
+# Everything here edits github.com/micazev/micazev-content, the private repo
+# mounted at content/. Each save is a commit to its main branch; a workflow
+# there calls the Vercel deploy hook, and the site rebuilds from that main.
+
+backend:
+  name: github
+  repo: micazev/micazev-content
+  branch: main
+
+site_url: https://micazev.com
+display_url: https://micazev.com
+
+# Only the Site copy files use these; notes and pages keep their images next
+# to the entry (see media_folder on each collection).
+media_folder: images
+public_folder: /images
+
+# One file per language: notes/<slug>.en.md, notes/<slug>.pt.md.
+# src/components/note-html.cjs reads the same layout back.
+i18n:
+  structure: multiple_files
+  locales: [en, pt]
+  default_locale: en
+  # Lets a note be published in English only: untick Portuguese in the editor.
+  initial_locales: all
+
+collections:
+  - name: notes
+    label: Notes
+    label_singular: Note
+    folder: notes
+    extension: md
+    format: frontmatter
+    create: true
+    i18n: true
+    # The slug is the file name and the URL (/notes/<slug>/). Editable when
+    # the note is created, then fixed, so published links don't break.
+    slug:
+      template: "{{title}}"
+      editable: [create]
+    media_folder: images
+    public_folder: images
+    preview_path: /notes/{{slug}}/
+    summary: "{{title}} · {{date}}"
+    sortable_fields: [date, title]
+    fields:
+      - name: title
+        label: Title
+        widget: string
+        i18n: true
+        required: [en]
+      - name: date
+        label: Date
+        widget: datetime
+        type: date
+        format: YYYY-MM-DD
+        default: "{{now}}"
+        i18n: duplicate
+      # Labels for each tag in both languages live in src/components/notes.js
+      # (tagLabels); a tag added here without one shows as written.
+      - name: tags
+        label: Tags
+        widget: select
+        multiple: true
+        required: false
+        i18n: duplicate
+        options: [yoga, meditation, ai, tools, travel, habits, health, books, society]
+      - name: body
+        label: Body
+        widget: richtext
+        i18n: true
+        required: [en]
+
+  - name: pages
+    label: Pages
+    label_singular: Page
+    description: Standalone pages at micazev.com/<slug>/. notes, tech and admin are taken.
+    folder: pages
+    extension: md
+    format: frontmatter
+    create: true
+    i18n: true
+    slug:
+      template: "{{title}}"
+      editable: [create]
+      pattern: ["^(?!(notes|notas|tech|admin|404)$)[a-z0-9-]+$", "Lowercase letters, numbers and dashes; not notes, tech or admin."]
+    media_folder: images
+    public_folder: images
+    preview_path: /{{slug}}/
+    fields:
+      - name: title
+        label: Title
+        widget: string
+        i18n: true
+        required: [en]
+      - name: body
+        label: Body
+        widget: richtext
+        i18n: true
+        required: [en]
+
+  - name: site
+    label: Site copy
+    i18n: false
+    files:
+      - name: tech
+        label: /tech page
+        file: site/tech.json
+        format: json
+        fields:
+          - name: bio
+            label: Bio
+            label_singular: Paragraph
+            widget: list
+            field: { name: paragraph, label: Paragraph, widget: text }
+          - { name: email, label: Email, widget: string }
+          - { name: availability, label: Availability, widget: string, hint: "Next to the green dot" }
+          - name: projects
+            label: Current projects
+            label_singular: Project
+            widget: list
+            summary: "{{fields.name}}"
+            fields:
+              - { name: name, label: Name, widget: string }
+              - { name: href, label: URL, widget: string }
+              - &socials
+                name: socials
+                label: Social links
+                label_singular: Link
+                widget: list
+                required: false
+                summary: "{{fields.label}}"
+                fields:
+                  - { name: label, label: Label, widget: string }
+                  - name: icon
+                    label: Icon
+                    widget: select
+                    options: [tiktok, instagram, threads, x, pinterest, substack, linkedin, letterboxd, goodreads, youtube]
+                  - { name: href, label: URL, widget: string }
+          - name: experience
+            label: Past work
+            label_singular: Job
+            widget: list
+            summary: "{{fields.company}} · {{fields.years}}"
+            fields:
+              - { name: company, label: Company, widget: string }
+              - { name: years, label: Years, widget: string, hint: "e.g. 2022 - 2024" }
+              - { name: description, label: Description, widget: text }
+          - { name: timeZone, label: Time zone, widget: string, hint: "IANA name, e.g. Asia/Ho_Chi_Minh" }
+          - { name: timeZoneAbbr, label: Time zone abbreviation, widget: string }
+          - name: quote
+            label: Quote
+            widget: object
+            fields:
+              - { name: text, label: Text, widget: text }
+              - { name: author, label: Author, widget: string }
+              - { name: source, label: Source, widget: string }
+
+      - name: socials
+        label: Footer socials
+        file: site/site.json
+        format: json
+        fields:
+          - *socials

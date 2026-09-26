@@ -1,3 +1,4 @@
 [submodule "content"]
 	path = content
 	url = https://github.com/micazev/micazev-content.git
+	branch = main
