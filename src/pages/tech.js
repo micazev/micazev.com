@@ -33,6 +33,28 @@ const content = {
   ],
   experience: [
     {
+      company: "Competitor Analysis",
+      years: "2026",
+      description:
+        "Competitor intelligence platform for a UK manufacturer where every company, profile and dashboard is derived from ingested reports. PDFs and spreadsheets pass through extract, classify, normalize, load and enrich stages, and each file is tagged against a controlled taxonomy: entity type, value chain role, sector, market, geography, channel, year and source.",
+      concepts: [
+        "Document ingestion pipeline",
+        "Controlled-vocabulary taxonomy",
+        "Multi-entity classification",
+        "Document-entity linking",
+        "Validation and review queue",
+        "Metadata-based search",
+        "Natural-language Q&A over documents",
+        "Company maps",
+      ],
+      image: {
+        src: "/images/competitor-analysis.webp",
+        alt: "File classification screen: a company profile document tagged by entity type, value chain role, sector, geography, channel, year and source.",
+        width: 2000,
+        height: 1135,
+      },
+    },
+    {
       company: "MP Consultoria Contábil",
       years: "2022 - 2024",
       description:
@@ -177,6 +199,24 @@ const TechPage = ({ data }) => {
                 <span className="entry-years">{job.years}</span>
               </div>
               <p className="entry-desc">{job.description}</p>
+              {job.concepts ? (
+                <ul className="entry-concepts" aria-label="Concepts">
+                  {job.concepts.map((concept) => (
+                    <li key={concept}>{concept}</li>
+                  ))}
+                </ul>
+              ) : null}
+              {job.image ? (
+                <img
+                  className="entry-image"
+                  src={job.image.src}
+                  alt={job.image.alt}
+                  width={job.image.width}
+                  height={job.image.height}
+                  loading="lazy"
+                  decoding="async"
+                />
+              ) : null}
             </article>
           ))}
         </div>
