@@ -16,7 +16,7 @@
      footer bars run on so the chrome spans the window above it. */
   --measure: 448px;        /* 400px content + side padding           */
   --bar-measure: 1200px;
-  --nameplate-w: clamp(150px, 16vw, 190px);
+  --nameplate-w: clamp(75px, 8vw, 95px);
 
   --space-xs: 8px;
   --space-sm: 16px;
@@ -792,6 +792,11 @@ body:has(.notes-page) {
   text-underline-offset: 4px;
 }
 
+/* A CMS page has no back link, so its language toggle sits alone. */
+.page-title-row {
+  justify-content: flex-end;
+}
+
 .note-header {
   margin-top: var(--space-lg);
 }
@@ -848,6 +853,18 @@ body:has(.notes-page) {
   height: auto;
   margin-block: 1.4em;
   border-radius: 4px;
+}
+
+/* gatsby-remark-images wraps each image in a sized span and positions the
+   <img> absolutely inside it, so the spacing goes on the wrapper. */
+.note-body .gatsby-resp-image-wrapper {
+  margin-block: 1.4em;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.note-body .gatsby-resp-image-image {
+  margin: 0;
 }
 
 .note-body hr {
