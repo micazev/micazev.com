@@ -109,6 +109,24 @@ const TechPage = ({ data }) => {
                 <span className="entry-years">{job.years}</span>
               </div>
               <p className="entry-desc">{job.description}</p>
+              {job.concepts ? (
+                <ul className="entry-concepts" aria-label="Concepts">
+                  {job.concepts.map((concept) => (
+                    <li key={concept}>{concept}</li>
+                  ))}
+                </ul>
+              ) : null}
+              {job.image ? (
+                <img
+                  className="entry-image"
+                  src={job.image.src}
+                  alt={job.image.alt}
+                  width={job.image.width}
+                  height={job.image.height}
+                  loading="lazy"
+                  decoding="async"
+                />
+              ) : null}
             </article>
           ))}
         </div>
