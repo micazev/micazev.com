@@ -1,66 +1,61 @@
 import * as React from "react";
 import { graphql } from "gatsby";
 import {
-  NoteTags,
+  LangToggle,
   useNotesLang,
   NotesShell,
-  NoteBackRow,
   copy,
 } from "../components/notes";
 import { groupTranslations, noteLang } from "../components/note-html.cjs";
 
-const NotePage = ({ data }) => {
+// A standalone page written in the CMS (content/pages/<slug>.<lang>.md),
+// served at /<slug>/. Same reading column and language rules as a note.
+const Page = ({ data }) => {
   const [lang, setLanguage] = useNotesLang();
-  const [note] = groupTranslations(data.allMarkdownRemark.nodes);
-
-  // Untranslated notes show their title in the language they are written in,
-  // so the heading never promises a translation the body cannot deliver.
-  const shown = noteLang(note.langs, lang);
-  const title = note.titles[shown];
-  const body = note.html[shown];
+  const [page] = groupTranslations(data.allMarkdownRemark.nodes);
+  const shown = noteLang(page.langs, lang);
 
   return (
     <NotesShell lang={lang}>
       <article className="note-article reveal">
-        <NoteBackRow lang={lang} setLanguage={setLanguage} />
+        {page.langs.length > 1 ? (
+          <div className="notes-title-row page-title-row">
+            <LangToggle lang={lang} setLanguage={setLanguage} />
+          </div>
+        ) : null}
 
         <header className="note-header">
           <h1 className="note-title" lang={copy[shown].htmlLang}>
-            {title}
+            {page.titles[shown]}
           </h1>
-          <NoteTags
-            tags={note.tags}
-            lang={lang}
-            className="note-tags"
-          />
         </header>
 
         <div
           className="note-body"
           lang={copy[shown].htmlLang}
-          dangerouslySetInnerHTML={{ __html: body }}
+          dangerouslySetInnerHTML={{ __html: page.html[shown] }}
         />
       </article>
     </NotesShell>
   );
 };
 
-export default NotePage;
+export default Page;
 
 export const Head = ({ data }) => {
-  const [note] = groupTranslations(data.allMarkdownRemark.nodes);
+  const [page] = groupTranslations(data.allMarkdownRemark.nodes);
   return (
     <>
-      <title>{note.titles.en || note.titles.pt} — Michelle Azevedo</title>
+      <title>{page.titles.en || page.titles.pt} — Michelle Azevedo</title>
       <meta name="viewport" content="width=device-width, initial-scale=1" />
     </>
   );
 };
 
 export const query = graphql`
-  query NoteBySlug($slug: String!) {
+  query PageBySlug($slug: String!) {
     allMarkdownRemark(
-      filter: { fields: { slug: { eq: $slug }, collection: { eq: "notes" } } }
+      filter: { fields: { slug: { eq: $slug }, collection: { eq: "pages" } } }
       sort: { fields: { lang: ASC } }
     ) {
       nodes {
@@ -72,7 +67,6 @@ export const query = graphql`
         }
         frontmatter {
           title
-          tags
         }
       }
     }

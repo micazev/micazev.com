@@ -773,6 +773,11 @@ body:has(.notes-page) {
   text-underline-offset: 4px;
 }
 
+/* A CMS page has no back link, so its language toggle sits alone. */
+.page-title-row {
+  justify-content: flex-end;
+}
+
 .note-header {
   margin-top: var(--space-lg);
 }
@@ -829,6 +834,18 @@ body:has(.notes-page) {
   height: auto;
   margin-block: 1.4em;
   border-radius: 4px;
+}
+
+/* gatsby-remark-images wraps each image in a sized span and positions the
+   <img> absolutely inside it, so the spacing goes on the wrapper. */
+.note-body .gatsby-resp-image-wrapper {
+  margin-block: 1.4em;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.note-body .gatsby-resp-image-image {
+  margin: 0;
 }
 
 .note-body hr {
