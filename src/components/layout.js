@@ -55,7 +55,8 @@ const Nameplate = () => (
   </Link>
 );
 
-// partiallyActive so a single note keeps "notes" lit, and /tech keeps "tech".
+// partiallyActive so a single note keeps "notes" lit, /tech keeps "tech",
+// and /yoga keeps "yoga".
 const NavLink = ({ to, children }) => (
   <Link to={to} activeClassName="is-active" partiallyActive>
     {children}
@@ -74,6 +75,10 @@ export const Header = () => (
           |
         </span>
         <NavLink to="/tech/">tech</NavLink>
+        <span className="site-nav-sep" aria-hidden="true">
+          |
+        </span>
+        <NavLink to="/yoga/">yoga</NavLink>
       </nav>
     </div>
   </header>
