@@ -893,3 +893,146 @@ body:has(.notes-page) {
   text-underline-offset: 4px;
   text-decoration-thickness: 1px;
 }
+
+/* ---- /yoga ebook signup -------------------------------------------- */
+
+/* Sits on the /notes ground in the same column: a cover beside the
+   pitch, set off by hairlines rather than a card, like the lists. */
+.ebook-offer {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  gap: var(--space-md);
+  align-items: start;
+  margin-top: var(--space-lg);
+  padding-block: var(--space-md);
+  border-block: 1px solid var(--rule);
+}
+
+.ebook-offer:not(:has(.ebook-cover)) {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.ebook-cover {
+  width: 100%;
+  height: auto;
+  border-radius: 3px;
+  box-shadow:
+    0 1px 2px rgba(19, 19, 22, 0.08),
+    0 8px 24px -8px rgba(19, 19, 22, 0.18);
+}
+
+.ebook-body .section-label {
+  margin-bottom: var(--space-xs);
+}
+
+.ebook-title {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+.ebook-desc {
+  margin-top: var(--space-xs);
+  color: var(--ink-body);
+  line-height: 1.55;
+}
+
+.ebook-meta {
+  margin-top: 6px;
+  font-size: 13px;
+  color: var(--ink-muted);
+}
+
+.ebook-copy,
+.ebook-done p {
+  margin-top: var(--space-md);
+  color: var(--ink-body);
+}
+
+.ebook-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-top: 12px;
+}
+
+.ebook-input {
+  flex: 1 1 200px;
+  min-width: 0;
+  font: inherit;
+  font-size: 16px; /* 16px keeps iOS from zooming on focus */
+  line-height: 1.2;
+  color: var(--ink);
+  background: var(--ground);
+  padding: 8px 16px;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  transition: border-color 0.15s ease;
+}
+
+.ebook-input::placeholder {
+  color: var(--ink-faint);
+}
+
+.ebook-input:hover {
+  border-color: var(--ink-faint);
+}
+
+.ebook-input:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+  border-radius: 999px;
+}
+
+.ebook-input[aria-invalid="true"] {
+  border-color: #dc2626;
+}
+
+.ebook-fields .email-button {
+  border: 0;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.ebook-fields .email-button:disabled {
+  cursor: progress;
+  opacity: 0.7;
+}
+
+.ebook-done .email-button {
+  margin-top: 12px;
+}
+
+.ebook-error {
+  margin-top: var(--space-xs);
+  font-size: 13px;
+  color: #dc2626;
+}
+
+.ebook-honeypot {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+/* On a phone the cover floats beside the title and the form takes the
+   full width under both, instead of a squeezed column next to the cover. */
+@media (max-width: 520px) {
+  .ebook-offer {
+    display: flow-root;
+  }
+
+  .ebook-cover {
+    float: left;
+    width: 88px;
+    margin: 0 var(--space-sm) var(--space-xs) 0;
+  }
+
+  .ebook-form,
+  .ebook-done {
+    clear: both;
+  }
+}

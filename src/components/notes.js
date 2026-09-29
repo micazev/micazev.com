@@ -37,6 +37,9 @@ export const tagLabels = {
 // Which of the tags above /tech treats as technical writing.
 export const techTags = ["ai", "tools"];
 
+// And which ones /yoga collects.
+export const yogaTags = ["yoga", "meditation"];
+
 export const NoteFilter = ({ tags, active, lang, onSelect }) => {
   const t = copy[lang];
   return (

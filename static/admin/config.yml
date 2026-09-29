@@ -76,7 +76,7 @@ collections:
   - name: pages
     label: Pages
     label_singular: Page
-    description: Standalone pages at micazev.com/<slug>/. notes, tech and admin are taken.
+    description: Standalone pages at micazev.com/<slug>/. notes, tech, yoga and admin are taken.
     folder: pages
     extension: md
     format: frontmatter
@@ -85,7 +85,7 @@ collections:
     slug:
       template: "{{title}}"
       editable: [create]
-      pattern: ["^(?!(notes|notas|tech|admin|404)$)[a-z0-9-]+$", "Lowercase letters, numbers and dashes; not notes, tech or admin."]
+      pattern: ["^(?!(notes|notas|tech|yoga|ebooks|api|admin|404)$)[a-z0-9-]+$", "Lowercase letters, numbers and dashes; not notes, tech, yoga or admin."]
     media_folder: images
     public_folder: images
     preview_path: /{{slug}}/
@@ -100,6 +100,48 @@ collections:
         widget: richtext
         i18n: true
         required: [en]
+
+  # One JSON file per ebook: ebooks/<slug>.json, with the PDF and cover in
+  # ebooks/files/. The build publishes each one at /ebooks/<slug>.pdf
+  # (src/lib/ebooks.cjs); which one /yoga offers is set under
+  # Site copy -> /yoga page.
+  - name: ebooks
+    label: Ebooks
+    label_singular: Ebook
+    description: >-
+      PDFs to give away. Choose the one the /yoga signup form hands out under
+      Site copy → /yoga page. Emails collected: micazev.com/admin/subscribers/
+    folder: ebooks
+    extension: json
+    format: json
+    create: true
+    delete: true
+    i18n: false
+    # The slug is the download address (/ebooks/<slug>.pdf) that emails
+    # already sent link to, so it is set once; rename by editing the title.
+    slug:
+      template: "{{title}}"
+      editable: [create]
+    media_folder: files
+    public_folder: files
+    summary: "{{title}} · {{language}}"
+    sortable_fields: [title]
+    fields:
+      - { name: title, label: Title, widget: string }
+      - { name: description, label: Description, widget: text, required: false, hint: "Shown under the title on /yoga." }
+      - name: language
+        label: Language of the ebook
+        widget: select
+        default: pt
+        options:
+          - { label: Portuguese, value: pt }
+          - { label: English, value: en }
+      - name: file
+        label: PDF
+        widget: file
+        accept: application/pdf
+        hint: "Upload a new PDF here to replace this one. Keep it under ~20 MB."
+      - { name: cover, label: Cover image, widget: image, required: false, hint: "Portrait, about 640 px wide." }
 
   - name: site
     label: Site copy
@@ -157,6 +199,35 @@ collections:
               - { name: text, label: Text, widget: text }
               - { name: author, label: Author, widget: string }
               - { name: source, label: Source, widget: string }
+
+      - name: yoga
+        label: /yoga page
+        file: site/yoga.json
+        format: json
+        fields:
+          - name: ebook
+            label: Active ebook
+            widget: relation
+            collection: ebooks
+            value_field: "{{slug}}"
+            search_fields: [title]
+            display_fields: [title]
+            required: false
+            hint: "The ebook the signup form hands out. Leave empty to hide the form."
+          - &yoga_copy
+            name: en
+            label: English
+            widget: object
+            fields:
+              - { name: blurb, label: Intro, widget: text }
+              - { name: offerLabel, label: Offer label, widget: string, hint: "Small caps above the ebook title, e.g. Free ebook" }
+              - { name: offerCopy, label: Offer text, widget: text, hint: "Above the email field" }
+              - { name: button, label: Button, widget: string }
+              - { name: success, label: After signing up, widget: text }
+              - { name: postsLabel, label: Notes list label, widget: string }
+          - <<: *yoga_copy
+            name: pt
+            label: Portuguese
 
       - name: socials
         label: Footer socials

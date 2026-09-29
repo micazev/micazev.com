@@ -1,8 +1,26 @@
 const path = require("path");
 const { parseFileName } = require("./src/components/note-html.cjs");
+const {
+  loadEbooks,
+  loadYogaCopy,
+  publicPaths,
+  publishEbooks,
+} = require("./src/lib/ebooks.cjs");
+
+const CONTENT = path.join(__dirname, "content");
 
 // Top-level routes a CMS page must not take over.
-const RESERVED = new Set(["notes", "notas", "tech", "admin", "404", "dev-404-page"]);
+const RESERVED = new Set([
+  "notes",
+  "notas",
+  "tech",
+  "yoga",
+  "ebooks",
+  "api",
+  "admin",
+  "404",
+  "dev-404-page",
+]);
 
 // Pin the frontmatter and fields so queries still build while a collection
 // is empty (no pages yet) or no entry happens to set an optional field.
@@ -117,4 +135,54 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       context: { slug },
     });
   }
+
+  // /yoga: its copy and the ebook it offers are read here rather than
+  // imported, so the site still builds while content/ has neither.
+  const copy = loadYogaCopy(CONTENT);
+  const ebooks = loadEbooks(CONTENT, (msg) => reporter.warn(msg));
+  const active = copy && ebooks.find((ebook) => ebook.slug === copy.ebook);
+  if (copy && copy.ebook && !active) {
+    reporter.warn(
+      `content/site/yoga.json: ebook "${copy.ebook}" not found; /yoga will show no signup form.`,
+    );
+  }
+
+  createPage({
+    path: "/yoga/",
+    component: path.resolve("src/templates/yoga.js"),
+    context: {
+      copy: copy ? { en: copy.en || {}, pt: copy.pt || {} } : { en: {}, pt: {} },
+      // Title and cover only; the PDF's address is handed out by
+      // /api/subscribe once an email is in.
+      ebook: active
+        ? {
+            slug: active.slug,
+            title: active.title,
+            description: active.description,
+            language: active.language,
+            coverUrl: publicPaths(active).coverUrl,
+          }
+        : null,
+    },
+  });
+};
+
+const activeEbook = () => (loadYogaCopy(CONTENT) || {}).ebook;
+
+exports.onPostBuild = ({ reporter }) => {
+  publishEbooks(
+    loadEbooks(CONTENT, (msg) => reporter.warn(msg)),
+    activeEbook(),
+    path.join(__dirname, "public"),
+  );
+};
+
+// gatsby develop serves public/ too, so publish there on start; restart
+// develop to pick up an ebook added or swapped while it runs.
+exports.onCreateDevServer = ({ reporter }) => {
+  publishEbooks(
+    loadEbooks(CONTENT, (msg) => reporter.warn(msg)),
+    activeEbook(),
+    path.join(__dirname, "public"),
+  );
 };
