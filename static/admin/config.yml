@@ -218,13 +218,15 @@ collections:
             name: en
             label: English
             widget: object
+            # All optional: src/templates/yoga.js fills an empty field with
+            # its built-in default text.
             fields:
-              - { name: blurb, label: Intro, widget: text }
-              - { name: offerLabel, label: Offer label, widget: string, hint: "Small caps above the ebook title, e.g. Free ebook" }
-              - { name: offerCopy, label: Offer text, widget: text, hint: "Above the email field" }
-              - { name: button, label: Button, widget: string }
-              - { name: success, label: After signing up, widget: text }
-              - { name: postsLabel, label: Notes list label, widget: string }
+              - { name: blurb, label: Intro, widget: text, required: false, hint: "Leave empty for the default: Notes on yoga's history, texts and practice." }
+              - { name: offerLabel, label: Offer label, widget: string, required: false, hint: "Small caps above the ebook title, e.g. Free ebook" }
+              - { name: offerCopy, label: Offer text, widget: text, required: false, hint: "Above the email field" }
+              - { name: button, label: Button, widget: string, required: false }
+              - { name: success, label: After signing up, widget: text, required: false }
+              - { name: postsLabel, label: Notes list label, widget: string, required: false }
           - <<: *yoga_copy
             name: pt
             label: Portuguese
