@@ -84,6 +84,17 @@ const TechPage = ({ data }) => {
                   <ArrowUpRight />
                 </a>
               </div>
+              {project.image ? (
+                <img
+                  className="entry-image"
+                  src={project.image.src}
+                  alt={project.image.alt}
+                  width={project.image.width}
+                  height={project.image.height}
+                  loading="lazy"
+                  decoding="async"
+                />
+              ) : null}
               {project.socials ? (
                 <Socials
                   items={project.socials}

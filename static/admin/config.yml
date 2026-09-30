@@ -167,6 +167,16 @@ collections:
             fields:
               - { name: name, label: Name, widget: string }
               - { name: href, label: URL, widget: string }
+              - name: image
+                label: Screenshot
+                widget: object
+                required: false
+                hint: "File goes in static/images of the site repo; src is /images/<file>.webp"
+                fields:
+                  - { name: src, label: Path, widget: string }
+                  - { name: alt, label: Alt text, widget: text }
+                  - { name: width, label: Width, widget: number, value_type: int }
+                  - { name: height, label: Height, widget: number, value_type: int }
               - &socials
                 name: socials
                 label: Social links
@@ -179,7 +189,7 @@ collections:
                   - name: icon
                     label: Icon
                     widget: select
-                    options: [tiktok, instagram, threads, x, pinterest, substack, linkedin, letterboxd, goodreads, youtube]
+                    options: [tiktok, instagram, threads, x, pinterest, substack, linkedin, letterboxd, goodreads, youtube, facebook]
                   - { name: href, label: URL, widget: string }
           - name: experience
             label: Past work
