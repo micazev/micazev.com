@@ -1,13 +1,19 @@
 # Sveltia CMS — https://sveltiacms.app/en/docs
 #
 # Everything here edits github.com/micazev/micazev-content, the private repo
-# mounted at content/. Each save is a commit to its main branch; a workflow
-# there calls the Vercel deploy hook, and the site rebuilds from that main.
+# mounted at content/. A workflow there calls the Vercel deploy hook on every
+# push to its main branch, and the site rebuilds from that main.
 
 backend:
   name: github
   repo: micazev/micazev-content
   branch: main
+
+# Saving keeps an entry as a draft: Sveltia commits it to a cms/... branch
+# with a pull request, so main and the live site don't change. Publish it
+# from the entry (or the Editorial Workflow board) to merge it into main.
+# The sign-in token needs Pull requests: Read and write as well as Contents.
+publish_mode: editorial_workflow
 
 site_url: https://micazev.com
 display_url: https://micazev.com
@@ -68,6 +74,7 @@ collections:
         format: YYYY-MM-DD
         default: "{{now}}"
         i18n: duplicate
+        hint: "Orders the list, newest first. Set an earlier date for posts first published elsewhere."
       - &section
         name: section
         label: Section
