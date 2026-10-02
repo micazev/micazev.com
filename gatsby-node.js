@@ -33,6 +33,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     type MarkdownRemarkFrontmatter {
       title: String
       date: Date @dateformat
+      draft: Boolean
       section: String
       tags: [String!]
     }
@@ -78,9 +79,10 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     isPermanent: true,
   });
 
+  // Entries ticked Draft in the CMS get no page; the lists skip them too.
   const result = await graphql(`
     query {
-      allMarkdownRemark {
+      allMarkdownRemark(filter: { frontmatter: { draft: { ne: true } } }) {
         nodes {
           fields {
             slug

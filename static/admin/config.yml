@@ -12,6 +12,7 @@ backend:
 # Saving keeps an entry as a draft: Sveltia commits it to a cms/... branch
 # with a pull request, so main and the live site don't change. Publish it
 # from the entry (or the Editorial Workflow board) to merge it into main.
+# An entry already on main is taken down with its Draft field instead.
 # The sign-in token needs Pull requests: Read and write as well as Contents.
 publish_mode: editorial_workflow
 
@@ -75,6 +76,14 @@ collections:
         default: "{{now}}"
         i18n: duplicate
         hint: "Orders the list, newest first. Set an earlier date for posts first published elsewhere."
+      - &draft
+        name: draft
+        label: Draft
+        widget: boolean
+        default: false
+        required: false
+        i18n: duplicate
+        hint: "On: hidden from the site. Turn on and publish to take a live post down; turn off and publish to bring it back."
       - &section
         name: section
         label: Section
@@ -109,7 +118,7 @@ collections:
     label_singular: Tech post
     description: Listed on micazev.com/tech/.
     filter: { field: section, value: tech }
-    fields: [*title, *date, { <<: *section, default: tech }, *tags, *body]
+    fields: [*title, *date, *draft, { <<: *section, default: tech }, *tags, *body]
 
   - <<: *notes
     name: yoga
@@ -117,7 +126,7 @@ collections:
     label_singular: Yoga post
     description: Listed on micazev.com/yoga/.
     filter: { field: section, value: yoga }
-    fields: [*title, *date, { <<: *section, default: yoga }, *tags, *body]
+    fields: [*title, *date, *draft, { <<: *section, default: yoga }, *tags, *body]
 
   - name: pages
     label: Pages
@@ -141,6 +150,7 @@ collections:
         widget: string
         i18n: true
         required: [en]
+      - *draft
       - name: body
         label: Body
         widget: richtext

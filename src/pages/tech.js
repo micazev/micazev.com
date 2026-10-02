@@ -198,7 +198,10 @@ export const Head = () => (
 export const query = graphql`
   query TechNotes {
     allMarkdownRemark(
-      filter: { fields: { collection: { eq: "notes" } } }
+      filter: {
+        fields: { collection: { eq: "notes" } }
+        frontmatter: { draft: { ne: true } }
+      }
       sort: [{ frontmatter: { date: DESC } }, { fields: { lang: ASC } }]
     ) {
       nodes {

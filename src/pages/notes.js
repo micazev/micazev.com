@@ -119,7 +119,10 @@ export const Head = () => (
 export const query = graphql`
   query NotesIndex {
     allMarkdownRemark(
-      filter: { fields: { collection: { eq: "notes" } } }
+      filter: {
+        fields: { collection: { eq: "notes" } }
+        frontmatter: { draft: { ne: true } }
+      }
       sort: [{ frontmatter: { date: DESC } }, { fields: { lang: ASC } }]
     ) {
       nodes {

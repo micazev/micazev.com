@@ -272,7 +272,10 @@ export const Head = ({ pageContext }) => (
 export const query = graphql`
   query YogaNotes {
     allMarkdownRemark(
-      filter: { fields: { collection: { eq: "notes" } } }
+      filter: {
+        fields: { collection: { eq: "notes" } }
+        frontmatter: { draft: { ne: true } }
+      }
       sort: [{ frontmatter: { date: DESC } }, { fields: { lang: ASC } }]
     ) {
       nodes {
