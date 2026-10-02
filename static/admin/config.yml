@@ -30,7 +30,9 @@ i18n:
   structure: multiple_files
   locales: [en, pt]
   default_locale: en
-  # Lets a note be published in English only: untick Portuguese in the editor.
+  # Write a note in English, Portuguese or both: neither is required. Once
+  # published, a workflow in the content repo writes the missing language
+  # (.github/scripts/translate.mjs there).
   initial_locales: all
 
 collections:
@@ -66,7 +68,8 @@ collections:
         label: Title
         widget: string
         i18n: true
-        required: [en]
+        required: false
+        hint: "Write in English, Portuguese or both. The missing language is translated after you publish."
       - &date
         name: date
         label: Date
@@ -110,7 +113,7 @@ collections:
         label: Body
         widget: richtext
         i18n: true
-        required: [en]
+        required: false
 
   - <<: *notes
     name: tech
@@ -149,13 +152,13 @@ collections:
         label: Title
         widget: string
         i18n: true
-        required: [en]
+        required: false
       - *draft
       - name: body
         label: Body
         widget: richtext
         i18n: true
-        required: [en]
+        required: false
 
   # One JSON file per ebook: ebooks/<slug>.json, with the PDF and cover in
   # ebooks/files/. The build publishes each one at /ebooks/<slug>.pdf
