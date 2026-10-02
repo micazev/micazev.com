@@ -27,14 +27,22 @@ i18n:
   initial_locales: all
 
 collections:
-  - name: notes
+  # Notes, Tech and Yoga are one folder of notes, split by the section field:
+  # it decides which page lists a note (/notes/, /tech/ or /yoga/). Every
+  # note lives at /notes/<slug>/ whatever its section. Change the section in
+  # the editor to move a note; src/components/note-html.cjs reads it back.
+  - &notes
+    name: notes
     label: Notes
     label_singular: Note
+    description: Listed on micazev.com/notes/.
     folder: notes
     extension: md
     format: frontmatter
     create: true
     i18n: true
+    # Notes without a section (older files) belong here too.
+    filter: { field: section, value: [notes, null] }
     # The slug is the file name and the URL (/notes/<slug>/). Editable when
     # the note is created, then fixed, so published links don't break.
     slug:
@@ -46,32 +54,63 @@ collections:
     summary: "{{title}} · {{date}}"
     sortable_fields: [date, title]
     fields:
-      - name: title
+      - &title
+        name: title
         label: Title
         widget: string
         i18n: true
         required: [en]
-      - name: date
+      - &date
+        name: date
         label: Date
         widget: datetime
         type: date
         format: YYYY-MM-DD
         default: "{{now}}"
         i18n: duplicate
+      - &section
+        name: section
+        label: Section
+        widget: select
+        i18n: duplicate
+        default: notes
+        hint: "The page that lists this note."
+        options:
+          - { label: Notes, value: notes }
+          - { label: Tech, value: tech }
+          - { label: Yoga, value: yoga }
       # Labels for each tag in both languages live in src/components/notes.js
       # (tagLabels); a tag added here without one shows as written.
-      - name: tags
+      - &tags
+        name: tags
         label: Tags
         widget: select
         multiple: true
         required: false
         i18n: duplicate
         options: [yoga, meditation, ai, tools, travel, habits, health, books, society]
-      - name: body
+      - &body
+        name: body
         label: Body
         widget: richtext
         i18n: true
         required: [en]
+
+  - <<: *notes
+    name: tech
+    label: Tech
+    label_singular: Tech post
+    description: Listed on micazev.com/tech/.
+    filter: { field: section, value: tech }
+    fields: [*title, *date, { <<: *section, default: tech }, *tags, *body]
+
+  - <<: *notes
+    name: yoga
+    label: Yoga
+    label_singular: Yoga post
+    description: Listed on micazev.com/yoga/.
+    filter: { field: section, value: yoga }
+    fields: [*title, *date, { <<: *section, default: yoga }, *tags, *body]
 
   - name: pages
     label: Pages

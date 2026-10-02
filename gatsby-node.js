@@ -33,6 +33,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     type MarkdownRemarkFrontmatter {
       title: String
       date: Date @dateformat
+      section: String
       tags: [String!]
     }
     type MarkdownRemarkFields {

@@ -2,6 +2,7 @@ const { test } = require("node:test");
 const assert = require("node:assert/strict");
 const {
   groupTranslations,
+  notesInSection,
   noteLang,
   parseFileName,
 } = require("./note-html.cjs");
@@ -83,4 +84,34 @@ test("title and body never disagree for an untranslated note", () => {
   assert.equal(shown, "en");
   assert.equal(entry.titles[shown], "Hello");
   assert.equal(entry.html[shown], "<p>en</p>");
+});
+
+test("groupTranslations reads the section shared by both languages", () => {
+  const [entry] = groupTranslations([
+    node("a", "en", { title: "Hello", section: "tech" }),
+    node("a", "pt", { title: "Olá", section: "tech" }),
+  ]);
+  assert.equal(entry.section, "tech");
+});
+
+test("a note without a known section belongs to notes", () => {
+  const [missing, unknown] = groupTranslations([
+    node("a", "en", { title: "A" }),
+    node("b", "en", { title: "B", section: "recipes" }),
+  ]);
+  assert.equal(missing.section, "notes");
+  assert.equal(unknown.section, "notes");
+});
+
+test("notesInSection keeps each section to itself", () => {
+  const nodes = [
+    node("t", "en", { title: "T", section: "tech", tags: ["ai"] }),
+    node("y", "en", { title: "Y", section: "yoga", tags: ["yoga", "books"] }),
+    node("n", "en", { title: "N", tags: ["books"] }),
+  ];
+  const slugs = (section) => notesInSection(nodes, section).map((entry) => entry.slug);
+
+  assert.deepEqual(slugs("notes"), ["n"]);
+  assert.deepEqual(slugs("tech"), ["t"]);
+  assert.deepEqual(slugs("yoga"), ["y"]);
 });

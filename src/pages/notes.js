@@ -9,13 +9,13 @@ import {
   NotesIndexHeader,
   copy,
 } from "../components/notes";
-import { groupTranslations, noteLang } from "../components/note-html.cjs";
+import { notesInSection, noteLang } from "../components/note-html.cjs";
 
 const NotesPage = ({ data }) => {
   const [lang, setLanguage] = useNotesLang();
   const t = copy[lang];
   const posts = React.useMemo(
-    () => groupTranslations(data.allMarkdownRemark.nodes),
+    () => notesInSection(data.allMarkdownRemark.nodes, "notes"),
     [data],
   );
 
@@ -110,7 +110,7 @@ export const Head = () => (
     <title>notes — Michelle Azevedo</title>
     <meta
       name="description"
-      content="Notes by Michelle Azevedo — yoga, travel, tools, and older writing."
+      content="Notes by Michelle Azevedo — travel, habits, society, and older writing."
     />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
   </>
@@ -131,6 +131,7 @@ export const query = graphql`
         frontmatter {
           title
           date
+          section
           tags
         }
       }

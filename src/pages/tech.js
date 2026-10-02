@@ -2,8 +2,8 @@ import * as React from "react";
 import { graphql, Link } from "gatsby";
 
 import { Socials, ArrowUpRight, ChevronRight } from "../components/icons";
-import { NoteTags, techTags, useNotesLang, copy } from "../components/notes";
-import { groupTranslations, noteLang } from "../components/note-html.cjs";
+import { NoteTags, useNotesLang, copy } from "../components/notes";
+import { notesInSection, noteLang } from "../components/note-html.cjs";
 import content from "../../content/site/tech.json";
 
 /* ------------------------------------------------------------------ */
@@ -42,9 +42,7 @@ const TechPage = ({ data }) => {
   // No language toggle on this page; it follows whatever /notes was left on.
   const [lang] = useNotesLang();
 
-  const posts = groupTranslations(data.allMarkdownRemark.nodes).filter((post) =>
-    post.tags.some((tag) => techTags.includes(tag)),
-  );
+  const posts = notesInSection(data.allMarkdownRemark.nodes, "tech");
 
   return (
     <div className="tech-page">
@@ -212,6 +210,7 @@ export const query = graphql`
         frontmatter {
           title
           date
+          section
           tags
         }
       }

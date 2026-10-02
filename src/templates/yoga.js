@@ -7,10 +7,9 @@ import {
   LangToggle,
   useNotesLang,
   NotesShell,
-  yogaTags,
   copy as notesCopy,
 } from "../components/notes";
-import { groupTranslations, noteLang } from "../components/note-html.cjs";
+import { notesInSection, noteLang } from "../components/note-html.cjs";
 
 /* ------------------------------------------------------------------ */
 /*  /yoga: the yoga and meditation notes, and the ebook signup.        */
@@ -209,10 +208,7 @@ const YogaPage = ({ data, pageContext }) => {
   const t = useCopy(pageContext.copy, lang);
 
   const posts = React.useMemo(
-    () =>
-      groupTranslations(data.allMarkdownRemark.nodes).filter((post) =>
-        post.tags.some((tag) => yogaTags.includes(tag)),
-      ),
+    () => notesInSection(data.allMarkdownRemark.nodes, "yoga"),
     [data],
   );
 
@@ -288,6 +284,7 @@ export const query = graphql`
         frontmatter {
           title
           date
+          section
           tags
         }
       }

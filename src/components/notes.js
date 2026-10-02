@@ -34,12 +34,6 @@ export const tagLabels = {
   society: { en: "society", pt: "sociedade" },
 };
 
-// Which of the tags above /tech treats as technical writing.
-export const techTags = ["ai", "tools"];
-
-// And which ones /yoga collects.
-export const yogaTags = ["yoga", "meditation"];
-
 export const NoteFilter = ({ tags, active, lang, onSelect }) => {
   const t = copy[lang];
   return (
@@ -150,12 +144,13 @@ export const NotesIndexHeader = ({ lang, setLanguage }) => {
   );
 };
 
-export const NoteBackRow = ({ lang, setLanguage }) => {
+// A note links back to the page that lists it: /notes/, /tech/ or /yoga/.
+export const NoteBackRow = ({ lang, setLanguage, section = "notes" }) => {
   const t = copy[lang];
   return (
     <div className="notes-title-row">
-      <Link className="note-back" to="/notes/">
-        ← {t.back}
+      <Link className="note-back" to={`/${section}/`}>
+        ← {section === "notes" ? t.back : section}
       </Link>
       <LangToggle lang={lang} setLanguage={setLanguage} />
     </div>

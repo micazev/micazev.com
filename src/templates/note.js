@@ -22,7 +22,7 @@ const NotePage = ({ data }) => {
   return (
     <NotesShell lang={lang}>
       <article className="note-article reveal">
-        <NoteBackRow lang={lang} setLanguage={setLanguage} />
+        <NoteBackRow lang={lang} setLanguage={setLanguage} section={note.section} />
 
         <header className="note-header">
           <h1 className="note-title" lang={copy[shown].htmlLang}>
@@ -72,6 +72,7 @@ export const query = graphql`
         }
         frontmatter {
           title
+          section
           tags
         }
       }
