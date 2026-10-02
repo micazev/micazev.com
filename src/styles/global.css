@@ -817,6 +817,13 @@ body:has(.notes-page) {
   list-style: none;
 }
 
+/* Shown when the reader's language has no version of this note yet. */
+.note-untranslated {
+  margin: 14px 0 0;
+  color: var(--ink-muted);
+  font-size: 14px;
+}
+
 .note-body {
   margin-top: var(--space-lg);
   color: var(--ink-body);

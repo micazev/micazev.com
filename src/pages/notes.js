@@ -8,6 +8,7 @@ import {
   NotesShell,
   NotesIndexHeader,
   copy,
+  withLang,
 } from "../components/notes";
 import { notesInSection, noteLang } from "../components/note-html.cjs";
 
@@ -46,7 +47,9 @@ const NotesPage = ({ data }) => {
 
   const selectTag = (tag) => {
     setActiveTag(tag);
-    navigate(tag ? `/notes/?tag=${encodeURIComponent(tag)}` : "/notes/");
+    navigate(
+      withLang(tag ? `/notes/?tag=${encodeURIComponent(tag)}` : "/notes/", lang),
+    );
   };
 
   const visible = activeTag
@@ -84,7 +87,7 @@ const NotesPage = ({ data }) => {
               <li className="notes-item" key={slug}>
                 <Link
                   className="notes-item-title"
-                  to={`/notes/${slug}/`}
+                  to={withLang(`/notes/${slug}/`, lang)}
                   lang={copy[shown].htmlLang}
                 >
                   {title}

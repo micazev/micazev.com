@@ -2,7 +2,7 @@ import * as React from "react";
 import { graphql, Link } from "gatsby";
 
 import { Socials, ArrowUpRight, ChevronRight } from "../components/icons";
-import { NoteTags, useNotesLang, copy } from "../components/notes";
+import { NoteTags, useNotesLang, copy, withLang } from "../components/notes";
 import { notesInSection, noteLang } from "../components/note-html.cjs";
 import content from "../../content/site/tech.json";
 
@@ -40,7 +40,7 @@ const LocalTime = ({ timeZone, abbr }) => {
 
 const TechPage = ({ data }) => {
   // No language toggle on this page; it follows whatever /notes was left on.
-  const [lang] = useNotesLang();
+  const [lang] = useNotesLang({ inUrl: false });
 
   const posts = notesInSection(data.allMarkdownRemark.nodes, "tech");
 
@@ -155,7 +155,7 @@ const TechPage = ({ data }) => {
                 <li className="notes-item" key={slug}>
                   <Link
                     className="notes-item-title"
-                    to={`/notes/${slug}/`}
+                    to={withLang(`/notes/${slug}/`, lang)}
                     lang={copy[shown].htmlLang}
                   >
                     {titles[shown]}

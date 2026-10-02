@@ -6,6 +6,7 @@ import {
   NoteTags,
   LangToggle,
   useNotesLang,
+  withLang,
   NotesShell,
   copy as notesCopy,
 } from "../components/notes";
@@ -238,7 +239,7 @@ const YogaPage = ({ data, pageContext }) => {
                 <li className="notes-item" key={post.slug}>
                   <Link
                     className="notes-item-title"
-                    to={`/notes/${post.slug}/`}
+                    to={withLang(`/notes/${post.slug}/`, lang)}
                     lang={notesCopy[shown].htmlLang}
                   >
                     {post.titles[shown]}

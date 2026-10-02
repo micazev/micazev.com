@@ -10,6 +10,7 @@ export const copy = {
     back: "All notes",
     all: "all",
     filterLabel: "Filter notes by tag",
+    untranslated: "This note is only in Portuguese for now.",
   },
   pt: {
     title: "notes",
@@ -19,6 +20,7 @@ export const copy = {
     back: "Todas as notas",
     all: "todas",
     filterLabel: "Filtrar notas por tag",
+    untranslated: "Esta nota ainda só está em inglês.",
   },
 };
 
@@ -83,19 +85,48 @@ export const NoteTags = ({ tags, lang, className }) => {
   );
 };
 
-export const useNotesLang = () => {
+const isLang = (value) => value === "en" || value === "pt";
+
+// The language lives in the URL (?lang=pt) so a link always opens the
+// version it was copied from; the last choice is remembered for links that
+// don't carry one. replaceState keeps any other parameter (?tag=) intact.
+const writeLangToUrl = (lang) => {
+  const url = new URL(window.location.href);
+  if (url.searchParams.get("lang") === lang) return;
+  url.searchParams.set("lang", lang);
+  window.history.replaceState(window.history.state, "", url);
+};
+
+// Adds ?lang= to an internal link, so the next page opens in the same
+// language.
+export const withLang = (path, lang) => {
+  const [base, query = ""] = path.split("?");
+  const params = new URLSearchParams(query);
+  params.set("lang", lang);
+  return `${base}?${params}`;
+};
+
+// Pages without a language toggle pass { inUrl: false }: they still follow
+// the reader's language but leave their own URL alone.
+export const useNotesLang = ({ inUrl = true } = {}) => {
+  // Starts in English so the first render matches the static HTML.
   const [lang, setLang] = React.useState("en");
 
   React.useEffect(() => {
+    const fromUrl = new URLSearchParams(window.location.search).get("lang");
     const saved =
       window.localStorage.getItem("notes-lang") ||
       window.localStorage.getItem("notas-lang");
-    if (saved === "en" || saved === "pt") setLang(saved);
-  }, []);
+    const initial = isLang(fromUrl) ? fromUrl : isLang(saved) ? saved : "en";
+    setLang(initial);
+    if (isLang(fromUrl)) window.localStorage.setItem("notes-lang", fromUrl);
+    if (inUrl) writeLangToUrl(initial);
+  }, [inUrl]);
 
   const setLanguage = (next) => {
     setLang(next);
     window.localStorage.setItem("notes-lang", next);
+    if (inUrl) writeLangToUrl(next);
   };
 
   return [lang, setLanguage, copy[lang]];
@@ -149,7 +180,7 @@ export const NoteBackRow = ({ lang, setLanguage, section = "notes" }) => {
   const t = copy[lang];
   return (
     <div className="notes-title-row">
-      <Link className="note-back" to={`/${section}/`}>
+      <Link className="note-back" to={withLang(`/${section}/`, lang)}>
         ← {section === "notes" ? t.back : section}
       </Link>
       <LangToggle lang={lang} setLanguage={setLanguage} />

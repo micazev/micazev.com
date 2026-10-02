@@ -33,6 +33,9 @@ const NotePage = ({ data }) => {
             lang={lang}
             className="note-tags"
           />
+          {shown !== lang ? (
+            <p className="note-untranslated">{copy[lang].untranslated}</p>
+          ) : null}
         </header>
 
         <div
