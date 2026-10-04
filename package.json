@@ -9,7 +9,7 @@
     "build": "gatsby build",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
-    "test": "node --test src/components/note-html.test.cjs src/lib/ebooks.test.cjs src/lib/subscribers.test.cjs"
+    "test": "node --test src/components/note-html.test.cjs src/lib/ebooks.test.cjs src/lib/subscribers.test.cjs src/lib/projects.test.cjs"
   },
   "dependencies": {
     "@fontsource/carlito": "^5.3.0",

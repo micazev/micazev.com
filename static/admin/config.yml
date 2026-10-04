@@ -202,6 +202,47 @@ collections:
         hint: "Upload a new PDF here to replace this one. Keep it under ~20 MB."
       - { name: cover, label: Cover image, widget: image, required: false, hint: "Portrait, about 640 px wide." }
 
+  # Current projects on /tech, one JSON file each: projects/<slug>.json, with
+  # the screenshot in projects/images/. The build publishes it at
+  # /projects/<slug>.<ext> (src/lib/projects.cjs). Two per row on the page.
+  - name: projects
+    label: Projects
+    label_singular: Project
+    description: Current projects on micazev.com/tech/, two per row.
+    folder: projects
+    extension: json
+    format: json
+    create: true
+    delete: true
+    i18n: false
+    slug:
+      template: "{{name}}"
+      editable: [create]
+    media_folder: images
+    public_folder: images
+    summary: "{{order}} · {{name}}"
+    sortable_fields: [order, name]
+    fields:
+      - { name: name, label: Name, widget: string }
+      - { name: href, label: URL, widget: string, required: false, hint: "e.g. https://moradiah.com" }
+      - { name: order, label: Order, widget: number, value_type: int, required: false, hint: "1 shows first. Projects without a number go last." }
+      - { name: image, label: Screenshot, widget: image, required: false, hint: "Shown at 16:10, cropped from the top-left corner. About 2000 px wide." }
+      - { name: imageAlt, label: Screenshot description, widget: text, required: false, hint: "What the screenshot shows, for screen readers." }
+      - &socials
+        name: socials
+        label: Social links
+        label_singular: Link
+        widget: list
+        required: false
+        summary: "{{fields.label}}"
+        fields:
+          - { name: label, label: Label, widget: string }
+          - name: icon
+            label: Icon
+            widget: select
+            options: [tiktok, instagram, threads, x, pinterest, substack, linkedin, letterboxd, goodreads, youtube, facebook]
+          - { name: href, label: URL, widget: string }
+
   - name: site
     label: Site copy
     i18n: false
@@ -218,38 +259,6 @@ collections:
             field: { name: paragraph, label: Paragraph, widget: text }
           - { name: email, label: Email, widget: string }
           - { name: availability, label: Availability, widget: string, hint: "Next to the green dot" }
-          - name: projects
-            label: Current projects
-            label_singular: Project
-            widget: list
-            summary: "{{fields.name}}"
-            fields:
-              - { name: name, label: Name, widget: string }
-              - { name: href, label: URL, widget: string }
-              - name: image
-                label: Screenshot
-                widget: object
-                required: false
-                hint: "File goes in static/images of the site repo; src is /images/<file>.webp"
-                fields:
-                  - { name: src, label: Path, widget: string }
-                  - { name: alt, label: Alt text, widget: text }
-                  - { name: width, label: Width, widget: number, value_type: int }
-                  - { name: height, label: Height, widget: number, value_type: int }
-              - &socials
-                name: socials
-                label: Social links
-                label_singular: Link
-                widget: list
-                required: false
-                summary: "{{fields.label}}"
-                fields:
-                  - { name: label, label: Label, widget: string }
-                  - name: icon
-                    label: Icon
-                    widget: select
-                    options: [tiktok, instagram, threads, x, pinterest, substack, linkedin, letterboxd, goodreads, youtube, facebook]
-                  - { name: href, label: URL, widget: string }
           - name: experience
             label: Past work
             label_singular: Job

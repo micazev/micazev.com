@@ -421,6 +421,36 @@ body {
 
 /* ---- current projects ---------------------------------------------- */
 
+/* Two columns, one below 520px. The screenshots share one shape so the
+   rows line up whatever size was uploaded; the crop keeps the top-left
+   corner, where a page screenshot has its headline. */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px var(--space-md);
+}
+
+.projects-grid .entry-row {
+  flex-wrap: wrap;
+  gap: 2px var(--space-xs);
+}
+
+.project-image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: left top;
+  margin-top: 12px;
+  border-radius: 2px;
+}
+
+@media (max-width: 520px) {
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .project-url {
   display: inline-flex;
   align-items: center;

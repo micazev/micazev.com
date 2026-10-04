@@ -6,6 +6,7 @@ const {
   publicPaths,
   publishEbooks,
 } = require("./src/lib/ebooks.cjs");
+const { loadProjects, imageUrl, publishProjects } = require("./src/lib/projects.cjs");
 
 const CONTENT = path.join(__dirname, "content");
 
@@ -170,6 +171,17 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   });
 };
 
+// /tech is a file in src/pages; hand it the projects from content/projects
+// as page context, read here so the site still builds without that folder.
+exports.onCreatePage = ({ page, actions, reporter }) => {
+  if (page.path !== "/tech/") return;
+  const projects = loadProjects(CONTENT, (msg) => reporter.warn(msg)).map(
+    ({ image, ...project }) => ({ ...project, imageUrl: imageUrl({ ...project, image }) }),
+  );
+  actions.deletePage(page);
+  actions.createPage({ ...page, context: { ...page.context, projects } });
+};
+
 const activeEbook = () => (loadYogaCopy(CONTENT) || {}).ebook;
 
 exports.onPostBuild = ({ reporter }) => {
@@ -178,14 +190,16 @@ exports.onPostBuild = ({ reporter }) => {
     activeEbook(),
     path.join(__dirname, "public"),
   );
+  publishProjects(loadProjects(CONTENT), path.join(__dirname, "public"));
 };
 
 // gatsby develop serves public/ too, so publish there on start; restart
-// develop to pick up an ebook added or swapped while it runs.
+// develop to pick up an ebook or project added or swapped while it runs.
 exports.onCreateDevServer = ({ reporter }) => {
   publishEbooks(
     loadEbooks(CONTENT, (msg) => reporter.warn(msg)),
     activeEbook(),
     path.join(__dirname, "public"),
   );
+  publishProjects(loadProjects(CONTENT), path.join(__dirname, "public"));
 };

@@ -8,7 +8,8 @@ import content from "../../content/site/tech.json";
 
 /* ------------------------------------------------------------------ */
 /*  All copy lives in content/site/tech.json, edited in the CMS at     */
-/*  /admin under "Site copy". Leave the markup here alone.             */
+/*  /admin under "Site copy"; the projects come from content/projects  */
+/*  ("Projects" in the CMS) via gatsby-node.js. Leave the markup alone. */
 /* ------------------------------------------------------------------ */
 
 const displayHost = (href) =>
@@ -38,10 +39,11 @@ const LocalTime = ({ timeZone, abbr }) => {
   );
 };
 
-const TechPage = ({ data }) => {
+const TechPage = ({ data, pageContext }) => {
   // No language toggle on this page; it follows whatever /notes was left on.
   const [lang] = useNotesLang({ inUrl: false });
 
+  const projects = pageContext.projects || [];
   const posts = notesInSection(data.allMarkdownRemark.nodes, "tech");
 
   return (
@@ -65,45 +67,48 @@ const TechPage = ({ data }) => {
         </span>
       </div>
 
-      <section className="section reveal" style={{ animationDelay: "180ms" }}>
-        <h2 className="section-label">Current projects</h2>
-        <div className="entries">
-          {content.projects.map((project) => (
-            <article className="project" key={project.name}>
-              <div className="entry-row">
-                <h3 className="entry-company">{project.name}</h3>
-                <a
-                  className="project-url"
-                  href={project.href}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  {displayHost(project.href)}
-                  <ArrowUpRight />
-                </a>
-              </div>
-              {project.image ? (
-                <img
-                  className="entry-image"
-                  src={project.image.src}
-                  alt={project.image.alt}
-                  width={project.image.width}
-                  height={project.image.height}
-                  loading="lazy"
-                  decoding="async"
-                />
-              ) : null}
-              {project.socials ? (
-                <Socials
-                  items={project.socials}
-                  size={14}
-                  label={`${project.name} social media`}
-                />
-              ) : null}
-            </article>
-          ))}
-        </div>
-      </section>
+      {projects.length > 0 ? (
+        <section className="section reveal" style={{ animationDelay: "180ms" }}>
+          <h2 className="section-label">Current projects</h2>
+          {/* Two columns; an odd project out leaves its neighbour's cell empty. */}
+          <div className="projects-grid">
+            {projects.map((project) => (
+              <article className="project" key={project.slug}>
+                <div className="entry-row">
+                  <h3 className="entry-company">{project.name}</h3>
+                  {project.href ? (
+                    <a
+                      className="project-url"
+                      href={project.href}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {displayHost(project.href)}
+                      <ArrowUpRight />
+                    </a>
+                  ) : null}
+                </div>
+                {project.imageUrl ? (
+                  <img
+                    className="project-image"
+                    src={project.imageUrl}
+                    alt={project.imageAlt}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : null}
+                {project.socials.length > 0 ? (
+                  <Socials
+                    items={project.socials}
+                    size={14}
+                    label={`${project.name} social media`}
+                  />
+                ) : null}
+              </article>
+            ))}
+          </div>
+        </section>
+      ) : null}
 
       <details className="past-work reveal" style={{ animationDelay: "240ms" }}>
         <summary>
