@@ -55,8 +55,7 @@ const Nameplate = () => (
   </Link>
 );
 
-// partiallyActive so a single note keeps "notes" lit, /tech keeps "tech",
-// and /yoga keeps "yoga".
+// partiallyActive so a single project page keeps "tech" lit.
 const NavLink = ({ to, children }) => (
   <Link to={to} activeClassName="is-active" partiallyActive>
     {children}
@@ -65,20 +64,13 @@ const NavLink = ({ to, children }) => (
 
 // .site-bar runs wider than the page column on purpose: the chrome spans
 // the window, the reading column stays narrow underneath it.
+// /notes/ and /yoga/ still build; they're just not linked from the header.
 export const Header = () => (
   <header className="site-header">
     <div className="site-bar">
       <Nameplate />
       <nav className="site-nav" aria-label="Sections">
-        <NavLink to="/notes/">notes</NavLink>
-        <span className="site-nav-sep" aria-hidden="true">
-          |
-        </span>
         <NavLink to="/tech/">tech</NavLink>
-        <span className="site-nav-sep" aria-hidden="true">
-          |
-        </span>
-        <NavLink to="/yoga/">yoga</NavLink>
       </nav>
     </div>
   </header>
