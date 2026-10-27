@@ -37,6 +37,7 @@ module.exports = {
           // Must run before gatsby-remark-images: turns images/a%20b.png
           // back into the file name it looks up (plugins/).
           "gatsby-remark-decode-image-urls",
+          "gatsby-remark-redirect-links",
           {
             // Images uploaded in the CMS land next to the entry
             // (notes/images/x.jpg) and are written as images/x.jpg.

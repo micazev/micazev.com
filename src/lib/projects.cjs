@@ -9,6 +9,7 @@
 
 const fs = require("fs");
 const path = require("path");
+const { redirectUrl } = require("./link-redirects.cjs");
 
 const SLUG = /^[a-z0-9][a-z0-9-]*$/;
 
@@ -61,7 +62,7 @@ function loadProjects(contentDir, warn = () => {}) {
           slug,
           order: Number.isFinite(data.order) ? data.order : Infinity,
           name: data.name || slug,
-          href: data.href || "",
+          href: data.href ? redirectUrl(data.href) : "",
           summary: data.summary || "",
           placement,
           client: Boolean(data.client),
