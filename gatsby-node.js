@@ -15,6 +15,7 @@ const RESERVED = new Set([
   "notes",
   "notas",
   "tech",
+  "projects",
   "yoga",
   "ebooks",
   "api",
@@ -77,6 +78,18 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   createRedirect({
     fromPath: "/notas/",
     toPath: "/notes/",
+    isPermanent: true,
+  });
+
+  // /tech became /projects; its posts are on the home page now.
+  createRedirect({
+    fromPath: "/tech",
+    toPath: "/projects/",
+    isPermanent: true,
+  });
+  createRedirect({
+    fromPath: "/tech/",
+    toPath: "/projects/",
     isPermanent: true,
   });
 
@@ -171,13 +184,21 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   });
 };
 
-// /tech is a file in src/pages; hand it the projects from content/projects
-// as page context, read here so the site still builds without that folder.
+// The home page and /projects are files in src/pages; hand each the projects
+// from content/projects it shows as page context, read here so the site
+// still builds without that folder. The home takes placement "home",
+// /projects every other placement but "hidden".
+const PROJECT_PAGES = {
+  "/": (project) => project.placement === "home",
+  "/projects/": (project) => !["home", "hidden"].includes(project.placement),
+};
+
 exports.onCreatePage = ({ page, actions, reporter }) => {
-  if (page.path !== "/tech/") return;
-  const projects = loadProjects(CONTENT, (msg) => reporter.warn(msg)).map(
-    ({ image, ...project }) => ({ ...project, imageUrl: imageUrl({ ...project, image }) }),
-  );
+  const shows = PROJECT_PAGES[page.path];
+  if (!shows) return;
+  const projects = loadProjects(CONTENT, (msg) => reporter.warn(msg))
+    .filter(shows)
+    .map(({ image, ...project }) => ({ ...project, imageUrl: imageUrl({ ...project, image }) }));
   actions.deletePage(page);
   actions.createPage({ ...page, context: { ...page.context, projects } });
 };

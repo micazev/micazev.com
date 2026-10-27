@@ -47,3 +47,26 @@ test("publishProjects copies each screenshot to a URL-safe name", () => {
   assert.equal(imageUrl(projects[0]), "/projects/shown.webp");
   assert.ok(fs.existsSync(path.join(out, "projects", "shown.webp")));
 });
+
+test("loadProjects reads placement, defaulting to featured, and keeps only filled case blocks", () => {
+  const root = fixture([
+    ["plain", { name: "Plain" }],
+    ["home", { name: "Home", placement: "home", summary: "One line", client: true }],
+    ["odd", { name: "Odd", placement: "sidebar" }],
+    ["story", { name: "Story", case: { result: "Shipped", problem: " Slow ", built: "  " } }],
+  ]);
+  const warnings = [];
+  const bySlug = Object.fromEntries(loadProjects(root, (m) => warnings.push(m)).map((p) => [p.slug, p]));
+  assert.equal(bySlug.plain.placement, "featured");
+  assert.equal(bySlug.plain.client, false);
+  assert.deepEqual(bySlug.plain.case, []);
+  assert.equal(bySlug.home.placement, "home");
+  assert.equal(bySlug.home.summary, "One line");
+  assert.equal(bySlug.home.client, true);
+  assert.equal(bySlug.odd.placement, "featured");
+  assert.match(warnings[0], /odd\.json/);
+  assert.deepEqual(bySlug.story.case, [
+    { key: "problem", text: "Slow" },
+    { key: "result", text: "Shipped" },
+  ]);
+});

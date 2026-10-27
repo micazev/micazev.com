@@ -16,6 +16,13 @@ backend:
 # The sign-in token needs Pull requests: Read and write as well as Contents.
 publish_mode: editorial_workflow
 
+# Entry file names are their slugs and URLs: keep them ASCII, so "Leilão no
+# Mapa" is saved as leilao-no-mapa. src/lib/projects.cjs skips any project
+# file named otherwise.
+slug:
+  encoding: ascii
+  clean_accents: true
+
 site_url: https://micazev.com
 display_url: https://micazev.com
 
@@ -37,7 +44,7 @@ i18n:
 
 collections:
   # Notes, Tech and Yoga are one folder of notes, split by the section field:
-  # it decides which page lists a note (/notes/, /tech/ or /yoga/). Every
+  # it decides which page lists a note (/notes/, the home page or /yoga/). Every
   # note lives at /notes/<slug>/ whatever its section. Change the section in
   # the editor to move a note; src/components/note-html.cjs reads it back.
   - &notes
@@ -119,7 +126,7 @@ collections:
     name: tech
     label: Tech
     label_singular: Tech post
-    description: Listed on micazev.com/tech/.
+    description: Listed on the micazev.com home page.
     filter: { field: section, value: tech }
     fields: [*title, *date, *draft, { <<: *section, default: tech }, *tags, *body]
 
@@ -134,7 +141,7 @@ collections:
   - name: pages
     label: Pages
     label_singular: Page
-    description: Standalone pages at micazev.com/<slug>/. notes, tech, yoga and admin are taken.
+    description: Standalone pages at micazev.com/<slug>/. notes, tech, projects, yoga and admin are taken.
     folder: pages
     extension: md
     format: frontmatter
@@ -143,7 +150,7 @@ collections:
     slug:
       template: "{{title}}"
       editable: [create]
-      pattern: ["^(?!(notes|notas|tech|yoga|ebooks|api|admin|404)$)[a-z0-9-]+$", "Lowercase letters, numbers and dashes; not notes, tech, yoga or admin."]
+      pattern: ["^(?!(notes|notas|tech|projects|yoga|ebooks|api|admin|404)$)[a-z0-9-]+$", "Lowercase letters, numbers and dashes; not notes, tech, projects, yoga or admin."]
     media_folder: images
     public_folder: images
     preview_path: /{{slug}}/
@@ -202,13 +209,13 @@ collections:
         hint: "Upload a new PDF here to replace this one. Keep it under ~20 MB."
       - { name: cover, label: Cover image, widget: image, required: false, hint: "Portrait, about 640 px wide." }
 
-  # Current projects on /tech, one JSON file each: projects/<slug>.json, with
-  # the screenshot in projects/images/. The build publishes it at
-  # /projects/<slug>.<ext> (src/lib/projects.cjs). Two per row on the page.
+  # Projects, one JSON file each: projects/<slug>.json, with the screenshot in
+  # projects/images/. The build publishes it at /projects/<slug>.<ext>
+  # (src/lib/projects.cjs). Placement decides where each one shows.
   - name: projects
     label: Projects
     label_singular: Project
-    description: Current projects on micazev.com/tech/, two per row.
+    description: The product on the home page and the sections of micazev.com/projects/.
     folder: projects
     extension: json
     format: json
@@ -220,14 +227,38 @@ collections:
       editable: [create]
     media_folder: images
     public_folder: images
-    summary: "{{order}} · {{name}}"
-    sortable_fields: [order, name]
+    summary: "{{placement}} · {{order}} · {{name}}"
+    sortable_fields: [placement, order, name]
     fields:
       - { name: name, label: Name, widget: string }
+      - name: placement
+        label: Placement
+        widget: select
+        default: featured
+        hint: "Where it shows. Home is the products list on the home page; the others are sections of /projects."
+        options:
+          - { label: Home page (products), value: home }
+          - { label: Featured, value: featured }
+          - { label: Exploration, value: exploration }
+          - { label: In progress, value: building }
+          - { label: Hidden, value: hidden }
       - { name: href, label: URL, widget: string, required: false, hint: "e.g. https://moradiah.com" }
+      - { name: summary, label: One-line description, widget: string, required: false, hint: "Next to the name, e.g. AI analysis of Brazilian property registry documents (OCR, multi-LLM, evals)" }
+      - { name: client, label: Client work, widget: boolean, default: false, required: false, hint: "Adds a client work label next to the name." }
       - { name: order, label: Order, widget: number, value_type: int, required: false, hint: "1 shows first. Projects without a number go last." }
       - { name: image, label: Screenshot, widget: image, required: false, hint: "Shown at 16:10, cropped from the top-left corner. About 2000 px wide." }
       - { name: imageAlt, label: Screenshot description, widget: text, required: false, hint: "What the screenshot shows, for screen readers." }
+      - name: case
+        label: Case study
+        widget: object
+        required: false
+        collapsed: true
+        hint: "Featured projects only. Blocks left empty are not shown."
+        fields:
+          - { name: problem, label: Problem, widget: text, required: false }
+          - { name: built, label: What I built, widget: text, required: false }
+          - { name: decisions, label: Technical decisions, widget: text, required: false }
+          - { name: result, label: Result, widget: text, required: false }
       - &socials
         name: socials
         label: Social links
@@ -247,18 +278,32 @@ collections:
     label: Site copy
     i18n: false
     files:
-      - name: tech
-        label: /tech page
-        file: site/tech.json
+      - name: home
+        label: Home page
+        file: site/home.json
         format: json
         fields:
-          - name: bio
-            label: Bio
-            label_singular: Paragraph
-            widget: list
-            field: { name: paragraph, label: Paragraph, widget: text }
-          - { name: email, label: Email, widget: string }
-          - { name: availability, label: Availability, widget: string, hint: "Next to the green dot" }
+          - { name: bio, label: Bio, widget: text, hint: "One paragraph. **bold** and [link text](https://…) work." }
+          - { name: availability, label: Availability, widget: string, required: false, hint: "Next to the green dot" }
+          - name: contact
+            label: Footer contact
+            widget: object
+            fields:
+              - { name: email, label: Email, widget: string }
+              - name: links
+                label: Links
+                label_singular: Link
+                widget: list
+                summary: "{{fields.label}}"
+                fields:
+                  - { name: label, label: Label, widget: string }
+                  - { name: href, label: URL, widget: string }
+
+      - name: projects
+        label: /projects page
+        file: site/projects.json
+        format: json
+        fields:
           - name: experience
             label: Past work
             label_singular: Job
@@ -268,15 +313,6 @@ collections:
               - { name: company, label: Company, widget: string }
               - { name: years, label: Years, widget: string, hint: "e.g. 2022 - 2024" }
               - { name: description, label: Description, widget: text }
-          - { name: timeZone, label: Time zone, widget: string, hint: "IANA name, e.g. Asia/Ho_Chi_Minh" }
-          - { name: timeZoneAbbr, label: Time zone abbreviation, widget: string }
-          - name: quote
-            label: Quote
-            widget: object
-            fields:
-              - { name: text, label: Text, widget: text }
-              - { name: author, label: Author, widget: string }
-              - { name: source, label: Source, widget: string }
 
       - name: yoga
         label: /yoga page
@@ -309,9 +345,3 @@ collections:
             name: pt
             label: Portuguese
 
-      - name: socials
-        label: Footer socials
-        file: site/site.json
-        format: json
-        fields:
-          - *socials

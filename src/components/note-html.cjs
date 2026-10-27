@@ -5,8 +5,8 @@
 
 const LANGS = ["en", "pt"];
 
-// Which page lists a note: /notes/, /tech/ or /yoga/. Set per note in the
-// CMS; a note without one belongs to /notes/.
+// Which page lists a note: /notes/, the home page (tech) or /yoga/. Set per
+// note in the CMS; a note without one belongs to /notes/.
 const SECTIONS = ["notes", "tech", "yoga"];
 
 // Nodes -> [{ slug, date, section, tags, langs, titles: {en, pt}, html: {en, pt} }],

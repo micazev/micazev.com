@@ -175,13 +175,16 @@ export const NotesIndexHeader = ({ lang, setLanguage }) => {
   );
 };
 
-// A note links back to the page that lists it: /notes/, /tech/ or /yoga/.
+// A note links back to the page that lists it: /notes/, /yoga/, or the
+// home page for tech posts.
 export const NoteBackRow = ({ lang, setLanguage, section = "notes" }) => {
   const t = copy[lang];
+  const to = section === "tech" ? "/" : `/${section}/`;
+  const label = section === "notes" ? t.back : section === "tech" ? "home" : section;
   return (
     <div className="notes-title-row">
-      <Link className="note-back" to={withLang(`/${section}/`, lang)}>
-        ← {section === "notes" ? t.back : section}
+      <Link className="note-back" to={withLang(to, lang)}>
+        ← {label}
       </Link>
       <LangToggle lang={lang} setLanguage={setLanguage} />
     </div>

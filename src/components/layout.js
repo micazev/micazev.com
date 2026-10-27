@@ -1,8 +1,7 @@
 import * as React from "react";
 import { Link } from "gatsby";
 
-import { Socials } from "./icons";
-import { handle, name, socials } from "../data/site";
+import { handle, name, contact } from "../data/site";
 
 /* ------------------------------------------------------------------ */
 /*  The shell every page renders inside.                               */
@@ -15,62 +14,24 @@ import { handle, name, socials } from "../data/site";
 /*  the moment either height changes.                                  */
 /* ------------------------------------------------------------------ */
 
-/**
- * Both nameplate lines are drawn in one SVG so they share a coordinate
- * system: each <text> is pinned to textLength="1000", the full width of
- * the viewBox, which makes the two strings exactly as wide as each other
- * at any rendered size. lengthAdjust="spacing" spends the difference on
- * the gaps between glyphs rather than on the glyphs themselves, so the
- * letterforms are never stretched and the correction absorbs whatever
- * the system font stack resolves to on the reader's machine. The whole
- * block then scales with --nameplate-w; nothing here is viewport-bound.
- */
-const Nameplate = () => (
-  <Link className="nameplate" to="/" aria-label={`${handle} — ${name}`}>
-    <svg
-      className="nameplate-art"
-      viewBox="0 0 1000 222"
-      aria-hidden="true"
-      focusable="false"
-    >
-      <text
-        className="nameplate-handle"
-        x="0"
-        y="128"
-        textLength="1000"
-        lengthAdjust="spacing"
-      >
-        {handle}
-      </text>
-      <text
-        className="nameplate-name"
-        x="0"
-        y="212"
-        textLength="1000"
-        lengthAdjust="spacing"
-      >
-        {name}
-      </text>
-    </svg>
-  </Link>
-);
-
-// partiallyActive so a single project page keeps "tech" lit.
+// partiallyActive so a single project page keeps "projects" lit.
 const NavLink = ({ to, children }) => (
   <Link to={to} activeClassName="is-active" partiallyActive>
     {children}
   </Link>
 );
 
-// .site-bar runs wider than the page column on purpose: the chrome spans
-// the window, the reading column stays narrow underneath it.
+// .site-bar runs on the same column as the page under it, so the handle,
+// the menu and the footer links line up with the text.
 // /notes/ and /yoga/ still build; they're just not linked from the header.
 export const Header = () => (
   <header className="site-header">
     <div className="site-bar">
-      <Nameplate />
+      <Link className="site-handle" to="/" aria-label={`${handle} — ${name}`}>
+        {handle}
+      </Link>
       <nav className="site-nav" aria-label="Sections">
-        <NavLink to="/tech/">tech</NavLink>
+        <NavLink to="/projects/">projects</NavLink>
       </nav>
     </div>
   </header>
@@ -79,7 +40,18 @@ export const Header = () => (
 export const Footer = () => (
   <footer className="site-footer">
     <div className="site-bar">
-      <Socials items={socials} size={14} label="Social media" />
+      <ul className="site-contact" aria-label="Contact">
+        <li>
+          <a href={`mailto:${contact.email}`}>{contact.email}</a>
+        </li>
+        {contact.links.map((link) => (
+          <li key={link.href}>
+            <a href={link.href} target="_blank" rel="noreferrer">
+              {link.label}
+            </a>
+          </li>
+        ))}
+      </ul>
     </div>
   </footer>
 );

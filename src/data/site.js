@@ -1,16 +1,16 @@
 /* ------------------------------------------------------------------ */
 /*  Site-wide identity and links.                                      */
 /*                                                                     */
-/*  The header nameplate and the footer social row are rendered on     */
-/*  every page by src/components/layout.js, so the strings behind them */
-/*  live here rather than in any one page.                             */
+/*  The header and the footer contact row are rendered on every page   */
+/*  by src/components/layout.js, so the strings behind them live here  */
+/*  rather than in any one page.                                       */
 /* ------------------------------------------------------------------ */
 
-import siteContent from "../../content/site/site.json";
+import homeContent from "../../content/site/home.json";
 
-export const handle = "@micazev";
+export const handle = "micazev";
 
 export const name = "Michelle Azevedo";
 
-// Edited in the CMS at /admin under "Site copy" -> "Footer socials".
-export const socials = siteContent.socials;
+// Edited in the CMS at /admin under "Site copy" -> "Home page".
+export const contact = homeContent.contact;
