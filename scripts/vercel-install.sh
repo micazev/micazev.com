@@ -23,6 +23,17 @@ fi
 # submodule pointer here.
 git submodule update --init --recursive --remote
 
+# A preview of a branch builds the content branch of the same name when one
+# exists, so a change that needs new content can be previewed before either
+# side is merged. Production (main) and branches without a twin keep main.
+ref="${VERCEL_GIT_COMMIT_REF:-}"
+if [ -n "$ref" ] && [ "$ref" != "main" ] &&
+  git -C content ls-remote --exit-code --heads origin "$ref" >/dev/null; then
+  echo "content: using branch $ref"
+  git -C content fetch --depth 1 origin "refs/heads/$ref"
+  git -C content checkout --detach FETCH_HEAD
+fi
+
 if [ ! -d content/notes ]; then
   echo "error: content/notes is missing after submodule update." >&2
   echo "       Check that CONTENT_TOKEN is set and still valid (fine-grained" >&2
