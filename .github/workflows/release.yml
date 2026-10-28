@@ -1,0 +1,34 @@
+# Creates a GitHub Release (and its tag) from the Actions tab or the API.
+# Tags are dated, e.g. 2026.10.27; target is the commit or branch it marks.
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Tag, e.g. 2026.10.27"
+        required: true
+      target:
+        description: "Commit SHA or branch the tag points at"
+        required: true
+        default: main
+      notes:
+        description: "Release notes (Markdown)"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          TAG: ${{ inputs.tag }}
+          TARGET: ${{ inputs.target }}
+          NOTES: ${{ inputs.notes }}
+        run: gh release create "$TAG" --target "$TARGET" --title "$TAG" --notes "$NOTES"
