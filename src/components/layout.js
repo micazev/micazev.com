@@ -31,6 +31,10 @@ export const Header = () => (
         {handle}
       </Link>
       <nav className="site-nav" aria-label="Sections">
+        <Link to="/#case-studies">case studies</Link>
+        <span className="site-nav-sep" aria-hidden="true">
+          /
+        </span>
         <NavLink to="/projects/">projects</NavLink>
       </nav>
     </div>
@@ -59,6 +63,7 @@ export const Footer = () => (
 const Layout = ({ children, location }) => {
   const main = React.useRef(null);
   const pathname = location?.pathname;
+  const hash = location?.hash;
 
   // The shell outlives a route change, and so does the scroll offset of
   // the element carrying it: without this, leaving /notes/ halfway down
@@ -67,7 +72,10 @@ const Layout = ({ children, location }) => {
   // pin the content to the top.
   React.useEffect(() => {
     if (main.current) main.current.scrollTop = 0;
-  }, [pathname]);
+    // /#case-studies: the page scrolls inside .app-main, not the window,
+    // so the browser can't follow the hash by itself.
+    if (hash) document.getElementById(hash.slice(1))?.scrollIntoView();
+  }, [pathname, hash]);
 
   return (
     <div className="app-shell">

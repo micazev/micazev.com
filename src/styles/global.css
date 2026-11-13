@@ -1127,3 +1127,223 @@ body:has(.notes-page) {
     clear: both;
   }
 }
+
+/* ---- case studies --------------------------------------------------- */
+
+.case-card {
+  padding-block: var(--space-md);
+  border-bottom: 1px solid var(--rule);
+}
+
+.case-card-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px var(--space-xs);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.case-status {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--ink-muted);
+}
+
+.case-card-hook {
+  margin-top: 4px;
+  color: var(--ink-muted);
+  line-height: 1.7;
+}
+
+.case-thumb-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  margin-top: var(--space-sm);
+}
+
+.case-thumb {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 7.4;
+  object-fit: cover;
+  object-position: left top;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+}
+
+.case-thumb-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f4f4f5;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--ink-faint);
+  text-align: center;
+  padding: var(--space-sm);
+}
+
+.case-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: var(--space-sm) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.case-tag {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1;
+  padding: 5px 10px;
+  color: var(--ink-muted);
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.case-more {
+  display: inline-block;
+  margin-top: var(--space-sm);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ink-muted);
+  text-decoration: none;
+}
+
+.case-more:hover {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.case-foundation {
+  margin-top: var(--space-md);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--ink-faint);
+}
+
+.case-foundation-note {
+  display: block;
+}
+
+/* ---- case study page ------------------------------------------------ */
+
+body:has(.case-page) {
+  --measure: 620px;
+}
+
+.case-page {
+  max-width: var(--measure);
+  margin-inline: auto;
+  padding-inline: var(--space-md);
+  padding-block: clamp(24px, 5vh, 48px) var(--space-xl);
+}
+
+.case-header {
+  margin-block: var(--space-lg) var(--space-md);
+}
+
+.case-header .case-status {
+  margin-top: 6px;
+}
+
+.case-hook {
+  margin-top: 12px;
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--ink-body);
+}
+
+.case-header .case-tags {
+  margin-top: 14px;
+}
+
+.case-body {
+  margin-top: var(--space-lg);
+  color: var(--ink-body);
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.case-body section + section {
+  margin-top: var(--space-lg);
+}
+
+.case-body h2 {
+  margin-bottom: 10px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--ink-faint);
+}
+
+.case-body p + p,
+.case-body p + ul,
+.case-body ul + p {
+  margin-top: 0.9em;
+}
+
+.case-body ul {
+  padding-left: 1.25em;
+}
+
+.case-body li + li {
+  margin-top: 0.5em;
+}
+
+.case-body strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.case-body code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  padding: 1px 5px;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+}
+
+.case-links {
+  list-style: none;
+  padding-left: 0 !important;
+}
+
+.case-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+.case-byline {
+  margin-top: var(--space-xl);
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--rule);
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ink-muted);
+}
+
+.case-page .case-thumb {
+  aspect-ratio: 16 / 10;
+}
+
+@media (max-width: 520px) {
+  .case-thumb {
+    aspect-ratio: 16 / 10;
+  }
+
+  .note-title {
+    overflow-wrap: anywhere;
+  }
+}
