@@ -8,6 +8,8 @@ const {
 } = require("./src/lib/ebooks.cjs");
 const { loadProjects, imageUrl, publishProjects } = require("./src/lib/projects.cjs");
 
+const { caseStudies } = require("./src/data/case-studies.cjs");
+
 const CONTENT = path.join(__dirname, "content");
 
 // Top-level routes a CMS page must not take over.
@@ -16,6 +18,7 @@ const RESERVED = new Set([
   "notas",
   "tech",
   "projects",
+  "case-studies",
   "yoga",
   "ebooks",
   "api",
@@ -92,6 +95,16 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     toPath: "/projects/",
     isPermanent: true,
   });
+
+  // One page per case study; the copy is in src/data/case-studies.cjs.
+  const caseTemplate = path.resolve("src/templates/case-study.js");
+  for (const { slug } of caseStudies) {
+    createPage({
+      path: `/case-studies/${slug}/`,
+      component: caseTemplate,
+      context: { slug },
+    });
+  }
 
   // Entries ticked Draft in the CMS get no page; the lists skip them too.
   const result = await graphql(`

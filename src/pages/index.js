@@ -1,20 +1,18 @@
 import * as React from "react";
 import { graphql, Link } from "gatsby";
 
-import { ArrowUpRight } from "../components/icons";
+import { Tags, Thumb } from "../components/case-study";
+import { caseStudies, sharedFoundation } from "../data/case-studies.cjs";
 import { useNotesLang, copy, tagLabels, withLang } from "../components/notes";
 import { notesInSection, noteLang } from "../components/note-html.cjs";
 import content from "../../content/site/home.json";
 
 /* ------------------------------------------------------------------ */
-/*  Bio, availability, the tech posts and the product on show. Copy    */
+/*  Bio, availability, the case studies and the tech posts. Copy       */
 /*  lives in content/site/home.json ("Site copy" -> "Home page" in the */
-/*  CMS); the posts are the notes whose section is Tech; the product   */
-/*  is every project placed on "home", handed in by gatsby-node.js.    */
+/*  CMS); the case studies are in src/data/case-studies.cjs; the      */
+/*  posts are the notes whose section is Tech.                         */
 /* ------------------------------------------------------------------ */
-
-const displayHost = (href) =>
-  href.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "");
 
 // The bio is one line of text with **bold** and [links](https://…), the
 // only two marks it needs, so the CMS field can stay a plain string.
@@ -41,11 +39,10 @@ const Inline = ({ text }) => {
   return parts;
 };
 
-const IndexPage = ({ data, pageContext }) => {
+const IndexPage = ({ data }) => {
   // No language toggle here; it follows whatever /notes was left on.
   const [lang] = useNotesLang({ inUrl: false });
 
-  const projects = pageContext.projects || [];
   const posts = notesInSection(data.allMarkdownRemark.nodes, "tech");
 
   return (
@@ -64,8 +61,43 @@ const IndexPage = ({ data, pageContext }) => {
         ) : null}
       </section>
 
+      <section
+        id="case-studies"
+        className="home-section reveal"
+        style={{ animationDelay: "60ms" }}
+      >
+        <h2 className="home-label">case studies</h2>
+        <div className="home-list">
+          {caseStudies.map((study) => (
+            <article className="case-card" key={study.slug}>
+              <h3 className="case-card-title">
+                {study.title}
+                {study.status ? <span className="case-status">{study.status}</span> : null}
+              </h3>
+              <p className="case-card-hook">{study.hook}</p>
+              <Link
+                className="case-thumb-link"
+                to={`/case-studies/${study.slug}/`}
+                aria-label={`${study.title}: read case study`}
+                tabIndex={-1}
+              >
+                <Thumb thumb={study.thumb} />
+              </Link>
+              <Tags tags={study.tags} />
+              <Link className="case-more" to={`/case-studies/${study.slug}/`}>
+                read case study →
+              </Link>
+            </article>
+          ))}
+        </div>
+        <p className="case-foundation">
+          {sharedFoundation.label}: {sharedFoundation.items.join(", ")}
+          <span className="case-foundation-note"> {sharedFoundation.note}</span>
+        </p>
+      </section>
+
       {posts.length > 0 ? (
-        <section className="home-section reveal" style={{ animationDelay: "60ms" }}>
+        <section className="home-section reveal" style={{ animationDelay: "120ms" }}>
           <h2 className="home-label">posts</h2>
           <ul className="home-list">
             {posts.map((post) => {
@@ -96,43 +128,6 @@ const IndexPage = ({ data, pageContext }) => {
         </section>
       ) : null}
 
-      {projects.length > 0 ? (
-        <section className="home-section reveal" style={{ animationDelay: "120ms" }}>
-          <h2 className="home-label">products</h2>
-          <div className="home-list">
-            {projects.map((project) => (
-              <article className="product" key={project.slug}>
-                <div className="product-row">
-                  <h3 className="product-name">{project.name}</h3>
-                  {project.summary ? (
-                    <p className="product-summary">{project.summary}</p>
-                  ) : null}
-                  {project.href ? (
-                    <a
-                      className="product-url"
-                      href={project.href}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      {displayHost(project.href)}
-                      <ArrowUpRight />
-                    </a>
-                  ) : null}
-                </div>
-                {project.imageUrl ? (
-                  <img
-                    className="product-image"
-                    src={project.imageUrl}
-                    alt={project.imageAlt}
-                    loading="lazy"
-                    decoding="async"
-                  />
-                ) : null}
-              </article>
-            ))}
-          </div>
-        </section>
-      ) : null}
     </div>
   );
 };
